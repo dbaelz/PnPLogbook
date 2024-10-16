@@ -8,6 +8,7 @@ class ExperienceRepository {
     }
 
     fun add(experience: Experience) {
+        // TODO: Check for only positive values?
         experiences.add(experience)
     }
 }
