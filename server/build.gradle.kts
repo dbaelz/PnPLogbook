@@ -20,6 +20,6 @@ dependencies {
     implementation(libs.ktor.serialization.json.jvm)
     implementation(libs.ktor.server.contentnegotiation)
 
-    //testImplementation(libs.ktor.server.tests)
-    //testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.ktor.server.test.host)
+    testImplementation(libs.kotlin.test.junit)
 }
