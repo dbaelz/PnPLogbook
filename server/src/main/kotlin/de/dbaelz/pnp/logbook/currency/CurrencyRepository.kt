@@ -23,7 +23,7 @@ class CurrencyRepository {
         }
     }
 
-    suspend fun getAmountAndItems(): Pair<Coins, List<Currency>> {
+    suspend fun getAmountAndEntries(): Pair<Coins, List<Currency>> {
         val currencyEntries = executeQuery {
             CurrencyTable.selectAll()
                 .map {

@@ -32,11 +32,11 @@ class ExperienceRepository {
         }
     }
 
-    suspend fun add(experience: Int, reason: String) {
+    suspend fun add(experience: AddExperience) {
         executeQuery {
             ExperienceTable.insert {
-                it[this.experience] = experience
-                it[this.reason] = reason
+                it[this.experience] = experience.experience
+                it[this.reason] = experience.reason
             }
         }
     }

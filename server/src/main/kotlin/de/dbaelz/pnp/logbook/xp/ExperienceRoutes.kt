@@ -27,7 +27,7 @@ fun Application.registerExperienceRoutes() {
             post {
                 try {
                     val addExperience = call.receive<AddExperience>()
-                    experienceRepository.add(addExperience.experience, addExperience.reason)
+                    experienceRepository.add(addExperience)
                     call.respond(HttpStatusCode.NoContent)
                 } catch (exception: IllegalStateException) {
                     call.respond(HttpStatusCode.BadRequest)
