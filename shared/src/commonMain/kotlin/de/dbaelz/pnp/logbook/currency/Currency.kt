@@ -12,4 +12,7 @@ data class Coins(
 )
 
 @Serializable
-data class Currency(val coins: Coins, val reason: String)
+data class Currency(val id: Int, val coins: Coins, val reason: String)
+
+@Serializable
+data class AddCurrency(val coins: Coins, val reason: String)

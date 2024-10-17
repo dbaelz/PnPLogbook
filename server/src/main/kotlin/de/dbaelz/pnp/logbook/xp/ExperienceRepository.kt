@@ -1,15 +1,14 @@
 package de.dbaelz.pnp.logbook.xp
 
-import kotlinx.coroutines.Dispatchers
+import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class ExperienceRepository {
-    object ExperienceTable : IntIdTable() {
+    private object ExperienceTable : IntIdTable() {
         val experience = integer("experience")
         val reason = varchar("reason", 255)
     }
@@ -41,7 +40,4 @@ class ExperienceRepository {
             }
         }
     }
-
-    private suspend fun <T> executeQuery(block: suspend () -> T): T =
-        newSuspendedTransaction(Dispatchers.IO) { block() }
 }

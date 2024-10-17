@@ -27,7 +27,7 @@ fun Application.registerCurrencyRoutes() {
 
             post {
                 try {
-                    val currency = call.receive<Currency>()
+                    val currency = call.receive<AddCurrency>()
                     currencyRepository.add(currency)
                     call.respond(HttpStatusCode.NoContent)
                 } catch (exception: IllegalStateException) {
