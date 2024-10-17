@@ -1,6 +1,7 @@
 package de.dbaelz.pnp.logbook
 
 import de.dbaelz.pnp.logbook.currency.registerCurrencyRoutes
+import de.dbaelz.pnp.logbook.logbook.registerLogbookRoutes
 import de.dbaelz.pnp.logbook.xp.registerExperienceRoutes
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -33,6 +34,7 @@ fun Application.module() {
 
         registerExperienceRoutes()
         registerCurrencyRoutes()
+        registerLogbookRoutes()
     }
 }
 
