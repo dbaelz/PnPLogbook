@@ -9,6 +9,10 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import java.io.File
+import java.sql.Connection
 
 fun main() {
     embeddedServer(Netty, port = SERVER_PORT, host = "0.0.0.0", module = Application::module)
@@ -16,6 +20,8 @@ fun main() {
 }
 
 fun Application.module() {
+    configureDatabase()
+
     install(ContentNegotiation) {
         json()
     }
@@ -28,4 +34,10 @@ fun Application.module() {
         registerExperienceRoutes()
         registerCurrencyRoutes()
     }
+}
+
+private fun configureDatabase() {
+    TransactionManager.manager.defaultIsolationLevel = Connection.TRANSACTION_SERIALIZABLE
+    File("./data").mkdir()
+    Database.connect("jdbc:sqlite:data/data.db", "org.sqlite.JDBC")
 }
