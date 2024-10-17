@@ -4,11 +4,14 @@ import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
+import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class ExperienceRepository {
     private object ExperienceTable : IntIdTable() {
+        val date = datetime("date").defaultExpression(CurrentDateTime)
         val experience = integer("experience")
         val reason = varchar("reason", 255)
     }
@@ -25,6 +28,7 @@ class ExperienceRepository {
                 .map {
                     Experience(
                         id = it[ExperienceTable.id].value,
+                        date = it[ExperienceTable.date],
                         experience = it[ExperienceTable.experience],
                         reason = it[ExperienceTable.reason]
                     )

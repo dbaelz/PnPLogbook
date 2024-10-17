@@ -1,5 +1,6 @@
 package de.dbaelz.pnp.logbook.currency
 
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,7 +13,7 @@ data class Coins(
 )
 
 @Serializable
-data class Currency(val id: Int, val coins: Coins, val reason: String)
+data class Currency(val id: Int, val date: LocalDateTime, val coins: Coins, val reason: String)
 
 @Serializable
 data class AddCurrency(val coins: Coins, val reason: String)

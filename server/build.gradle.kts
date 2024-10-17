@@ -21,6 +21,7 @@ dependencies {
     implementation(libs.ktor.server.contentnegotiation)
     implementation(libs.ktor.exposed.core)
     implementation(libs.ktor.exposed.jdbc)
+    implementation(libs.ktor.exposed.datetime)
     implementation(libs.sqlite)
 
     testImplementation(libs.ktor.server.test.host)

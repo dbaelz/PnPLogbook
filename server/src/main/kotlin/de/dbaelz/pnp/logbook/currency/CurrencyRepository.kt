@@ -4,11 +4,14 @@ import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
+import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class CurrencyRepository {
     private object CurrencyTable : IntIdTable() {
+        val date = datetime("date").defaultExpression(CurrentDateTime)
         val copper = integer("copper")
         val silver = integer("silver")
         val electrum = integer("electrum")
@@ -29,6 +32,7 @@ class CurrencyRepository {
                 .map {
                     Currency(
                         id = it[CurrencyTable.id].value,
+                        date = it[CurrencyTable.date],
                         coins = Coins(
                             copper = it[CurrencyTable.copper],
                             silver = it[CurrencyTable.silver],
