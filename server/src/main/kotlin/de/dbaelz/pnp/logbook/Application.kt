@@ -40,9 +40,11 @@ fun Application.module() {
             call.respondText("Welcome to the PnP Logbook!")
         }
 
-        registerExperienceRoutes()
-        registerCurrencyRoutes()
-        registerLogbookRoutes()
+        route("/api") {
+            registerExperienceRoutes()
+            registerCurrencyRoutes()
+            registerLogbookRoutes()
+        }
     }
 }
 

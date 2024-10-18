@@ -5,6 +5,7 @@ import de.dbaelz.pnp.logbook.getServerHost
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
@@ -18,7 +19,10 @@ val httpClient = HttpClient {
         })
     }
     defaultRequest {
-        host = getServerHost()
-        port = SERVER_PORT
+        url {
+            host = getServerHost()
+            port = SERVER_PORT
+            path("api/")
+        }
     }
 }
