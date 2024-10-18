@@ -2,7 +2,7 @@ package de.dbaelz.pnp.logbook
 
 import de.dbaelz.pnp.logbook.currency.registerCurrencyRoutes
 import de.dbaelz.pnp.logbook.logbook.registerLogbookRoutes
-import de.dbaelz.pnp.logbook.xp.registerExperienceRoutes
+import de.dbaelz.pnp.logbook.experience.registerExperienceRoutes
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*

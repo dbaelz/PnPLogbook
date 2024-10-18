@@ -1,4 +1,4 @@
-package de.dbaelz.pnp.logbook.xp
+package de.dbaelz.pnp.logbook.experience
 
 import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
