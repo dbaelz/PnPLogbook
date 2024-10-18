@@ -6,7 +6,6 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
 
 fun Application.registerExperienceRoutes() {
     val experienceRepository = ExperienceRepository()
@@ -17,7 +16,7 @@ fun Application.registerExperienceRoutes() {
                 val experience = experienceRepository.getExperience()
 
                 call.respond(
-                    ExperienceResponse(
+                    ExperienceDTO(
                         total = experience.sumOf { it.experience },
                         entries = experience
                     )
@@ -38,6 +37,3 @@ fun Application.registerExperienceRoutes() {
         }
     }
 }
-
-@Serializable
-data class ExperienceResponse(val total: Int, val entries: List<Experience>)

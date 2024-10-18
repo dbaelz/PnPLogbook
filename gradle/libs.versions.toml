@@ -8,7 +8,7 @@ androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
 androidx-core-ktx = "1.13.1"
 androidx-espresso-core = "3.6.1"
-androidx-lifecycle = "2.8.2"
+androidx-lifecycle = "2.8.3"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose-plugin = "1.6.11"
@@ -38,18 +38,30 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
+
+
 # Ktor
+ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+
+## Ktor Server
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
-ktor-serialization-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
 ktor-serialization-json-jvm = { group = "io.ktor", name = "ktor-serialization-kotlinx-json-jvm", version.ref = "ktor" }
 ktor-server-contentnegotiation = { group = "io.ktor", name = "ktor-server-content-negotiation-jvm", version.ref = "ktor" }
 ktor-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 ktor-exposed-jdbc  = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 ktor-exposed-datetime  = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
 sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
+
+## Ktor Client
+ktor-client-core  = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-contentnegotiation  = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-android  = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-desktop  = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-ios  = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js  = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 
 
 [plugins]
