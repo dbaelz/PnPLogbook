@@ -55,6 +55,7 @@ class ExperienceViewModel(
             val experience = experienceRepository.getExperience()
             sendEvent(Internal.Event.UpdateExperience(experience))
         } catch (exception: Exception) {
+            exception.printStackTrace()
             sendEvent(Internal.Event.ShowMessage("Error: ${exception.message}"))
         }
     }
