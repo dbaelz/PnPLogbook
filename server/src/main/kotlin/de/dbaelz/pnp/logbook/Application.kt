@@ -1,13 +1,15 @@
 package de.dbaelz.pnp.logbook
 
 import de.dbaelz.pnp.logbook.currency.registerCurrencyRoutes
-import de.dbaelz.pnp.logbook.logbook.registerLogbookRoutes
 import de.dbaelz.pnp.logbook.experience.registerExperienceRoutes
+import de.dbaelz.pnp.logbook.logbook.registerLogbookRoutes
+import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
@@ -22,6 +24,12 @@ fun main() {
 
 fun Application.module() {
     configureDatabase()
+
+    install(CORS) {
+        // Fixme: Only for local testing
+        allowHost("localhost:8081")
+        allowHeader(HttpHeaders.ContentType)
+    }
 
     install(ContentNegotiation) {
         json()
