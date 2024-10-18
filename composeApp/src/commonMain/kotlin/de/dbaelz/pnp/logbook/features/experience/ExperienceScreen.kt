@@ -22,7 +22,8 @@ fun ExperienceScreen(
         ExperienceViewModel(
             ExperienceRepository()
         )
-    }
+    },
+    navigateBack: () -> Unit
 ) {
     // TODO: Dummy UI. Add proper UI later
     when (val state = viewModel.state.collectAsState().value) {
@@ -36,16 +37,23 @@ fun ExperienceScreen(
         }
 
         is State.Content -> {
-            LazyColumn {
-                stickyHeader {
-                    Box(modifier = Modifier.height(24.dp)) {
-                        Text("Total experience: ${state.total}")
+            if (state.message != null) {
+                Text(state.message)
+            } else if (state.experienceEntries.isNotEmpty()) {
+                LazyColumn(contentPadding = PaddingValues(16.dp)) {
+                    stickyHeader {
+                        Box(modifier = Modifier.height(24.dp)) {
+                            Text("Total experience: ${state.total}")
+                        }
+                    }
+                    items(state.experienceEntries) {
+                        ExperienceItem(it)
                     }
                 }
-                items(state.experienceEntries) {
-                    ExperienceItem(it)
-                }
+            } else {
+
             }
+
         }
     }
 }

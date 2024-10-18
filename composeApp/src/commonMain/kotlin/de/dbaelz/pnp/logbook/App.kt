@@ -46,13 +46,15 @@ fun App() {
             ) {
                 composable(route = Screen.Overview.name) {
                     OverviewScreen(
-                        onNavigateToExperience = {
-                            navController.navigate(Screen.Experience.name)
+                        navigateTo = {
+                            navController.navigate(it.name)
                         }
                     )
                 }
                 composable(route = Screen.Experience.name) {
-                    ExperienceScreen()
+                    ExperienceScreen {
+                        navController.navigateUp()
+                    }
                 }
             }
         }
