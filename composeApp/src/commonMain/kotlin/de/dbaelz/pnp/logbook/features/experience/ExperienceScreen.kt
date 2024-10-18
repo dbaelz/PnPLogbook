@@ -1,10 +1,7 @@
 package de.dbaelz.pnp.logbook.features.experience
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -12,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.experience.Experience
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.State
@@ -25,10 +23,8 @@ fun ExperienceScreen(
         )
     }
 ) {
-    val state = viewModel.state.collectAsState().value
-
     // TODO: Dummy UI. Add proper UI later
-    when (state) {
+    when (val state = viewModel.state.collectAsState().value) {
         is State.Loading -> {
             CircularProgressIndicator(
                 modifier = Modifier.fillMaxSize()
@@ -38,7 +34,9 @@ fun ExperienceScreen(
         is State.Content -> {
             LazyColumn {
                 stickyHeader {
-                    Text("Total experience: ${state.total}")
+                    Box(modifier = Modifier.height(24.dp)) {
+                        Text("Total experience: ${state.total}")
+                    }
                 }
                 items(state.experienceEntries) {
                     ExperienceItem(it)

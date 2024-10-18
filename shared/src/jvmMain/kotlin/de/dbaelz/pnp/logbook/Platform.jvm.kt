@@ -5,3 +5,5 @@ class JVMPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = JVMPlatform()
+
+actual fun getServerHost(): String = "127.0.0.1"

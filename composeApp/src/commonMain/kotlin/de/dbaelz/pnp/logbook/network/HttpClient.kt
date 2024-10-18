@@ -1,7 +1,7 @@
 package de.dbaelz.pnp.logbook.network
 
-import de.dbaelz.pnp.logbook.SERVER_HOST
 import de.dbaelz.pnp.logbook.SERVER_PORT
+import de.dbaelz.pnp.logbook.getServerHost
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -18,7 +18,7 @@ val httpClient = HttpClient {
         })
     }
     defaultRequest {
-        host = SERVER_HOST
+        host = getServerHost()
         port = SERVER_PORT
     }
 }
