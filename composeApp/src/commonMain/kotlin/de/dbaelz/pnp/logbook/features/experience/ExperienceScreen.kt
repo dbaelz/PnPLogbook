@@ -8,6 +8,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -26,9 +27,12 @@ fun ExperienceScreen(
     // TODO: Dummy UI. Add proper UI later
     when (val state = viewModel.state.collectAsState().value) {
         is State.Loading -> {
-            CircularProgressIndicator(
-                modifier = Modifier.fillMaxSize()
-            )
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(modifier = Modifier.fillMaxSize(0.25f))
+            }
         }
 
         is State.Content -> {

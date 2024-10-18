@@ -29,6 +29,7 @@ fun App() {
 
         // TODO: Improve UI
         Scaffold(
+            modifier = Modifier.fillMaxSize(),
             topBar = {
                 TopBar(
                     currentScreen = currentScreen,
