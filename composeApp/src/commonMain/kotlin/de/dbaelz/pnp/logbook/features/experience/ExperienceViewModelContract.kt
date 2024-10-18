@@ -1,11 +1,14 @@
-package de.dbaelz.pnp.logbook.experience
+package de.dbaelz.pnp.logbook.features.experience
+
+import de.dbaelz.pnp.logbook.experience.Experience
 
 object ExperienceViewModelContract {
     sealed interface State {
         data object Loading : State
 
         data class Content(
-            val experience: List<Experience> = emptyList(),
+            val total: Int = 0,
+            val experienceEntries: List<Experience> = emptyList(),
             val message: String? = null
         ) : State
     }

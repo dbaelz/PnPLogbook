@@ -1,37 +1,80 @@
 package de.dbaelz.pnp.logbook
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import de.dbaelz.pnp.logbook.features.experience.ExperienceScreen
+import de.dbaelz.pnp.logbook.features.overview.OverviewScreen
+import de.dbaelz.pnp.logbook.navigation.Screen
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-import pnplogbook.composeapp.generated.resources.Res
-import pnplogbook.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+        val navController: NavHostController = rememberNavController()
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val currentScreen = Screen.valueOf(
+            backStackEntry?.destination?.route ?: Screen.Overview.name
+        )
+
+        // TODO: Improve UI
+        Scaffold(
+            topBar = {
+                TopBar(
+                    currentScreen = currentScreen,
+                    canNavigateBack = navController.previousBackStackEntry != null,
+                    navigateUp = { navController.navigateUp() }
+
+                )
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+        ) {
+            NavHost(
+                navController = navController,
+                startDestination = Screen.Overview.name,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                composable(route = Screen.Overview.name) {
+                    OverviewScreen(
+                        onNavigateToExperience = {
+                            navController.navigate(Screen.Experience.name)
+                        }
+                    )
+                }
+                composable(route = Screen.Experience.name) {
+                    ExperienceScreen()
                 }
             }
         }
     }
+}
+
+@Composable
+private fun TopBar(
+    currentScreen: Screen,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit
+) {
+    TopAppBar(
+        title = { Text(currentScreen.title) },
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name
+                    )
+                }
+            }
+        }
+    )
 }
