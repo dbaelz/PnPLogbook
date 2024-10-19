@@ -52,9 +52,7 @@ fun App() {
                     )
                 }
                 composable(route = Screen.Experience.name) {
-                    ExperienceScreen {
-                        navController.navigateUp()
-                    }
+                    ExperienceScreen()
                 }
             }
         }

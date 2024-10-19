@@ -1,7 +1,5 @@
 package de.dbaelz.pnp.logbook.features.experience
 
-import de.dbaelz.pnp.logbook.features.experience.AddExperience
-import de.dbaelz.pnp.logbook.features.experience.ExperienceDTO
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*
@@ -27,7 +25,14 @@ fun Route.registerExperienceRoutes() {
             try {
                 val addExperience = call.receive<AddExperience>()
                 experienceRepository.add(addExperience)
-                call.respond(HttpStatusCode.NoContent)
+
+                val experience = experienceRepository.getExperience()
+                call.respond(
+                    ExperienceDTO(
+                        total = experience.sumOf { it.experience },
+                        entries = experience
+                    )
+                )
             } catch (exception: IllegalStateException) {
                 call.respond(HttpStatusCode.BadRequest)
             } catch (exception: JsonConvertException) {

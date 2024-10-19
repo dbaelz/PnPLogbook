@@ -1,7 +1,5 @@
 package de.dbaelz.pnp.logbook.features.experience
 
-import de.dbaelz.pnp.logbook.features.experience.AddExperience
-import de.dbaelz.pnp.logbook.features.experience.Experience
 import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils

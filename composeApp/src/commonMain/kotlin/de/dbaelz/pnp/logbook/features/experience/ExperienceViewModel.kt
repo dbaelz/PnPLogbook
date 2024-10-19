@@ -29,7 +29,18 @@ class ExperienceViewModel(
         return when (event) {
             is Internal.Event -> reduceInternal(state, event)
 
-            is Event.AddExperience -> state
+            is Event.AddExperience -> {
+                addExperience(event.experience, event.reason)
+                if (state is State.Content) {
+                    state.copy(
+                        isLoading = true
+                    )
+                } else {
+                    State.Content(
+                        isLoading = true
+                    )
+                }
+            }
         }
     }
 
@@ -37,6 +48,7 @@ class ExperienceViewModel(
         return when (event) {
             is Internal.Event.UpdateExperience -> {
                 State.Content(
+                    isLoading = false,
                     total = event.experience.total,
                     experienceEntries = event.experience.entries
                 )
@@ -50,12 +62,25 @@ class ExperienceViewModel(
         }
     }
 
-    private suspend fun getExperience() {
-        try {
-            val experience = experienceRepository.getExperience()
-            sendEvent(Internal.Event.UpdateExperience(experience))
-        } catch (exception: Exception) {
-            sendEvent(Internal.Event.ShowMessage("Error loading experience: ${exception.message}"))
+    private fun getExperience() {
+        viewModelScope.launch {
+            try {
+                val experience = experienceRepository.getExperience()
+                sendEvent(Internal.Event.UpdateExperience(experience))
+            } catch (exception: Exception) {
+                sendEvent(Internal.Event.ShowMessage("Error loading experience: ${exception.message}"))
+            }
+        }
+    }
+
+    private fun addExperience(experience: Int, reason: String) {
+        viewModelScope.launch {
+            try {
+                val updatedExperience = experienceRepository.addExperience(experience, reason)
+                sendEvent(Internal.Event.UpdateExperience(updatedExperience))
+            } catch (exception: Exception) {
+                sendEvent(Internal.Event.ShowMessage("Error adding experience: ${exception.message}"))
+            }
         }
     }
 
