@@ -1,5 +1,7 @@
-package de.dbaelz.pnp.logbook.experience
+package de.dbaelz.pnp.logbook.features.experience
 
+import de.dbaelz.pnp.logbook.features.experience.AddExperience
+import de.dbaelz.pnp.logbook.features.experience.ExperienceDTO
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*

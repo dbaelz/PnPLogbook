@@ -1,6 +1,6 @@
 package de.dbaelz.pnp.logbook.features.experience
 
-import de.dbaelz.pnp.logbook.experience.Experience
+import de.dbaelz.pnp.logbook.features.experience.Experience
 
 object ExperienceViewModelContract {
     sealed interface State {

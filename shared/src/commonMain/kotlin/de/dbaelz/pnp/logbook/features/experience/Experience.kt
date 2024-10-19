@@ -1,4 +1,4 @@
-package de.dbaelz.pnp.logbook.experience
+package de.dbaelz.pnp.logbook.features.experience
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable

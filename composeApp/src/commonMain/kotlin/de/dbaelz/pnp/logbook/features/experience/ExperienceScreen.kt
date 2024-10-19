@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.dbaelz.pnp.logbook.experience.Experience
+import de.dbaelz.pnp.logbook.features.experience.Experience
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.State
 
 @OptIn(ExperimentalFoundationApi::class)

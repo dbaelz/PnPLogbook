@@ -1,4 +1,4 @@
-package de.dbaelz.pnp.logbook.currency
+package de.dbaelz.pnp.logbook.features.currency
 
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable

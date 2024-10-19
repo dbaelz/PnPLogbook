@@ -1,5 +1,8 @@
-package de.dbaelz.pnp.logbook.currency
+package de.dbaelz.pnp.logbook.features.currency
 
+import de.dbaelz.pnp.logbook.features.currency.AddCurrency
+import de.dbaelz.pnp.logbook.features.currency.Coins
+import de.dbaelz.pnp.logbook.features.currency.Currency
 import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -70,12 +73,12 @@ class CurrencyRepository {
     suspend fun add(currency: AddCurrency) {
         executeQuery {
             CurrencyTable.insert {
-                it[this.copper] = currency.coins.copper
-                it[this.silver] = currency.coins.silver
-                it[this.electrum] = currency.coins.electrum
-                it[this.gold] = currency.coins.gold
-                it[this.platinum] = currency.coins.platinum
-                it[this.reason] = currency.reason
+                it[copper] = currency.coins.copper
+                it[silver] = currency.coins.silver
+                it[electrum] = currency.coins.electrum
+                it[gold] = currency.coins.gold
+                it[platinum] = currency.coins.platinum
+                it[reason] = currency.reason
             }
         }
     }

@@ -1,5 +1,6 @@
-package de.dbaelz.pnp.logbook.logbook
+package de.dbaelz.pnp.logbook.features.logbook
 
+import de.dbaelz.pnp.logbook.features.logbook.AddLogbookEntry
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*

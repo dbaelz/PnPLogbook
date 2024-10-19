@@ -1,5 +1,8 @@
-package de.dbaelz.pnp.logbook.currency
+package de.dbaelz.pnp.logbook.features.currency
 
+import de.dbaelz.pnp.logbook.features.currency.AddCurrency
+import de.dbaelz.pnp.logbook.features.currency.Coins
+import de.dbaelz.pnp.logbook.features.currency.Currency
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*

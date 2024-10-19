@@ -1,7 +1,7 @@
 package de.dbaelz.pnp.logbook.features.experience
 
 import androidx.lifecycle.viewModelScope
-import de.dbaelz.pnp.logbook.experience.ExperienceDTO
+import de.dbaelz.pnp.logbook.features.experience.ExperienceDTO
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModel.Internal
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.State

@@ -1,5 +1,7 @@
-package de.dbaelz.pnp.logbook.experience
+package de.dbaelz.pnp.logbook.features.experience
 
+import de.dbaelz.pnp.logbook.features.experience.AddExperience
+import de.dbaelz.pnp.logbook.features.experience.Experience
 import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -39,8 +41,8 @@ class ExperienceRepository {
     suspend fun add(experience: AddExperience) {
         executeQuery {
             ExperienceTable.insert {
-                it[this.experience] = experience.experience
-                it[this.reason] = experience.reason
+                it[ExperienceTable.experience] = experience.experience
+                it[reason] = experience.reason
             }
         }
     }

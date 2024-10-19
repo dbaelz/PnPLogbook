@@ -1,5 +1,7 @@
-package de.dbaelz.pnp.logbook.logbook
+package de.dbaelz.pnp.logbook.features.logbook
 
+import de.dbaelz.pnp.logbook.features.logbook.AddLogbookEntry
+import de.dbaelz.pnp.logbook.features.logbook.LogbookEntry
 import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -55,8 +57,8 @@ class LogbookRepository {
     suspend fun add(logbook: AddLogbookEntry) {
         executeQuery {
             LogbookTable.insert {
-                it[this.location] = logbook.location
-                it[this.text] = logbook.text
+                it[location] = logbook.location
+                it[text] = logbook.text
             }
         }
     }
