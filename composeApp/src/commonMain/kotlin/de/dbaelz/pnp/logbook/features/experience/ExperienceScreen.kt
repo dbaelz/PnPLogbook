@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -18,16 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.State
-import kotlinx.datetime.LocalDateTime
+import de.dbaelz.pnp.logbook.ui.Loading
+import de.dbaelz.pnp.logbook.ui.localDateTimeFormat
 import kotlinx.datetime.format
-import kotlinx.datetime.format.char
 
 @Composable
 fun ExperienceScreen(
     viewModel: ExperienceViewModel = viewModel {
-        ExperienceViewModel(
-            ExperienceRepository()
-        )
+        ExperienceViewModel(ExperienceRepository())
     }
 ) {
     when (val state = viewModel.state.collectAsState().value) {
@@ -42,16 +39,6 @@ fun ExperienceScreen(
                 Content(state, viewModel)
             }
         }
-    }
-}
-
-@Composable
-private fun Loading() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(modifier = Modifier.fillMaxSize(0.25f))
     }
 }
 
@@ -105,7 +92,7 @@ private fun ExperienceItem(experience: Experience) {
 
         Text(
             textAlign = TextAlign.End,
-            text = experience.date.format(dateFormat)
+            text = experience.date.format(localDateTimeFormat)
         )
 
         Text(
@@ -159,12 +146,4 @@ private fun AddExperience(addExperience: (Int, String) -> Unit) {
             Text("Add")
         }
     }
-}
-
-val dateFormat = LocalDateTime.Format {
-    dayOfMonth()
-    char('.')
-    monthNumber()
-    char('.')
-    year()
 }

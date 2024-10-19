@@ -23,11 +23,11 @@ fun OverviewScreen(navigateTo: (Screen) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        OverviewCard(Screen.Logbook) { navigateTo(it) }
+
         OverviewCard(Screen.Experience) { navigateTo(it) }
 
         OverviewCard(Screen.Currency) { navigateTo(it) }
-
-        OverviewCard(Screen.Logbook) { navigateTo(it) }
     }
 }
 

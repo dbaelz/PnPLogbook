@@ -12,9 +12,7 @@ fun Route.registerLogbookRoutes() {
 
     route("/logbook") {
         get {
-            val logbook = logbookRepository.getLogbook()
-
-            call.respond(logbook)
+            call.respond(logbookRepository.getLogbook())
         }
         get("/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
@@ -36,7 +34,8 @@ fun Route.registerLogbookRoutes() {
             try {
                 val addLogbookEntry = call.receive<AddLogbookEntry>()
                 logbookRepository.add(addLogbookEntry)
-                call.respond(HttpStatusCode.NoContent)
+
+                call.respond(logbookRepository.getLogbook())
             } catch (exception: IllegalStateException) {
                 call.respond(HttpStatusCode.BadRequest)
             } catch (exception: JsonConvertException) {
