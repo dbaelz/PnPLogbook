@@ -3,6 +3,7 @@ package de.dbaelz.pnp.logbook
 import de.dbaelz.pnp.logbook.features.currency.registerCurrencyRoutes
 import de.dbaelz.pnp.logbook.features.experience.registerExperienceRoutes
 import de.dbaelz.pnp.logbook.features.logbook.registerLogbookRoutes
+import de.dbaelz.pnp.logbook.features.subject.registerSubjectRoutes
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -44,6 +45,7 @@ fun Application.module() {
             registerExperienceRoutes()
             registerCurrencyRoutes()
             registerLogbookRoutes()
+            registerSubjectRoutes()
         }
     }
 }
