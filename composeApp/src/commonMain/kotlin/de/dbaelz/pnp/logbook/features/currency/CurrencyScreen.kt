@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -66,6 +67,8 @@ private fun Content(
             }
         }
 
+        Spacer(Modifier.height(8.dp))
+
         AddCurrency { coins, reason ->
             viewModel.sendEvent(
                 Event.AddCurrency(
@@ -79,33 +82,35 @@ private fun Content(
 
 @Composable
 private fun CurrencyItem(currency: Currency) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    Card(
+        modifier = Modifier
+            .padding(vertical = 4.dp)
+            .height(96.dp)
+            .fillMaxWidth(),
+        elevation = 4.dp
     ) {
-        Text(
-            modifier = Modifier.width(48.dp),
-            textAlign = TextAlign.End,
-            text = currency.id.toString()
-        )
+        Column(modifier = Modifier.padding(8.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    textAlign = TextAlign.End,
+                    text = currency.id.toString()
+                )
 
-        Text(
-            textAlign = TextAlign.End,
-            text = currency.date.format(localDateTimeFormat)
-        )
+                Text(
+                    textAlign = TextAlign.End,
+                    text = currency.date.format(localDateTimeFormat)
+                )
+            }
 
-        Text(
-            modifier = Modifier.width(256.dp),
-            textAlign = TextAlign.End,
-            text = getCoinsText(currency.coins)
-        )
+            Text(text = getCoinsText(currency.coins))
 
-        Spacer(Modifier.width(4.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
-        Text(
-            modifier = Modifier.weight(1f),
-            text = currency.reason
-        )
+            Text(text = currency.reason)
+        }
     }
 }
 
@@ -120,12 +125,13 @@ private fun getCoinsText(coins: Coins): String {
 }
 
 @Composable
-private fun AddCurrency(addCurrency: (Coins, String) -> Unit) {
+private fun ColumnScope.AddCurrency(addCurrency: (Coins, String) -> Unit) {
     val coins = remember { mutableStateListOf(0, 0, 0, 0, 0) }
     var reason: String by remember { mutableStateOf("") }
 
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         AddCoinTextField(coins[0], { coins[0] = it }, "Copper")
         AddCoinTextField(coins[1], { coins[1] = it }, "Silver")
@@ -133,16 +139,18 @@ private fun AddCurrency(addCurrency: (Coins, String) -> Unit) {
         AddCoinTextField(coins[3], { coins[3] = it }, "Gold")
         AddCoinTextField(coins[4], { coins[4] = it }, "Platinum")
 
-        Spacer(modifier = Modifier.width(8.dp))
+    }
 
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         OutlinedTextField(
             value = reason,
             onValueChange = { reason = it },
             label = { Text("Reason") },
             modifier = Modifier.weight(1f)
         )
-
-        Spacer(modifier = Modifier.width(8.dp))
 
         Button(
             onClick = {
@@ -157,7 +165,7 @@ private fun AddCurrency(addCurrency: (Coins, String) -> Unit) {
                     reason
                 )
             },
-            enabled = reason.isNotEmpty()
+            enabled = reason.isNotEmpty() && coins.sum() > 0
         ) {
             Text("Add")
         }
