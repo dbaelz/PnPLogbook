@@ -34,6 +34,8 @@ fun OverviewScreen(navigateTo: (Screen) -> Unit) {
         OverviewCard(Screen.Groups) { navigateTo(it) }
 
         OverviewCard(Screen.Places) { navigateTo(it) }
+
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
 

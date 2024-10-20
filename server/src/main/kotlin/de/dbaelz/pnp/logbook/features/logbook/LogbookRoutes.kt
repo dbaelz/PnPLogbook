@@ -1,6 +1,5 @@
 package de.dbaelz.pnp.logbook.features.logbook
 
-import de.dbaelz.pnp.logbook.features.logbook.AddLogbookEntry
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*
@@ -14,6 +13,7 @@ fun Route.registerLogbookRoutes() {
         get {
             call.respond(logbookRepository.getLogbook())
         }
+
         get("/{id}") {
             val id = call.parameters["id"]?.toIntOrNull()
             if (id == null) {
@@ -41,6 +41,17 @@ fun Route.registerLogbookRoutes() {
             } catch (exception: JsonConvertException) {
                 call.respond(HttpStatusCode.BadRequest)
             }
+        }
+
+        delete("/{id}") {
+            val id = call.parameters["id"]?.toIntOrNull()
+            if (id == null) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@delete
+            }
+
+            logbookRepository.delete(id)
+            call.respond(logbookRepository.getLogbook())
         }
     }
 }

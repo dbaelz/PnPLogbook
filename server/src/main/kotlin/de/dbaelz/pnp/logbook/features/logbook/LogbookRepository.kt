@@ -1,10 +1,10 @@
 package de.dbaelz.pnp.logbook.features.logbook
 
-import de.dbaelz.pnp.logbook.features.logbook.AddLogbookEntry
-import de.dbaelz.pnp.logbook.features.logbook.LogbookEntry
 import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
@@ -60,6 +60,12 @@ class LogbookRepository {
                 it[location] = logbook.location
                 it[text] = logbook.text
             }
+        }
+    }
+
+    suspend fun delete(id: Int) {
+        executeQuery {
+            LogbookTable.deleteWhere { LogbookTable.id eq id }
         }
     }
 }
