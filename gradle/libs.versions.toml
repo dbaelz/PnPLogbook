@@ -18,6 +18,7 @@ ktor = "3.0.0"
 logback = "1.5.8"
 exposed = "0.55.0"
 sqlite = "3.46.1.3"
+napier = "2.7.1"
 
 
 [libraries]
@@ -33,6 +34,7 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation-compose" }
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
 
 
 # Ktor
@@ -54,6 +56,7 @@ sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 ## Ktor Client
 ktor-client-core  = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-contentnegotiation  = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging  = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-client-android  = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-client-desktop  = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-ios  = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }

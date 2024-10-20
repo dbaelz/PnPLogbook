@@ -10,6 +10,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        appInit() // Should be called from application class
+
         setContent {
             App()
         }
