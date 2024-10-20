@@ -16,4 +16,7 @@ data class Coins(
 data class Currency(val id: Int, val date: LocalDateTime, val coins: Coins, val reason: String)
 
 @Serializable
+data class CurrencyDTO(val total: Coins, val entries: List<Currency>)
+
+@Serializable
 data class AddCurrency(val coins: Coins, val reason: String)

@@ -1,14 +1,10 @@
 package de.dbaelz.pnp.logbook.features.currency
 
-import de.dbaelz.pnp.logbook.features.currency.AddCurrency
-import de.dbaelz.pnp.logbook.features.currency.Coins
-import de.dbaelz.pnp.logbook.features.currency.Currency
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.Serializable
 
 fun Route.registerCurrencyRoutes() {
     val currencyRepository = CurrencyRepository()
@@ -18,7 +14,7 @@ fun Route.registerCurrencyRoutes() {
             val currency = currencyRepository.getAmountAndEntries()
 
             call.respond(
-                CurrencyResponse(
+                CurrencyDTO(
                     total = currency.first,
                     entries = currency.second
                 )
@@ -27,9 +23,16 @@ fun Route.registerCurrencyRoutes() {
 
         post {
             try {
-                val currency = call.receive<AddCurrency>()
-                currencyRepository.add(currency)
-                call.respond(HttpStatusCode.NoContent)
+                val addCurrency = call.receive<AddCurrency>()
+                currencyRepository.add(addCurrency)
+
+                val currency = currencyRepository.getAmountAndEntries()
+                call.respond(
+                    CurrencyDTO(
+                        total = currency.first,
+                        entries = currency.second
+                    )
+                )
             } catch (exception: IllegalStateException) {
                 call.respond(HttpStatusCode.BadRequest)
             } catch (exception: JsonConvertException) {
@@ -38,6 +41,3 @@ fun Route.registerCurrencyRoutes() {
         }
     }
 }
-
-@Serializable
-data class CurrencyResponse(val total: Coins, val entries: List<Currency>)
