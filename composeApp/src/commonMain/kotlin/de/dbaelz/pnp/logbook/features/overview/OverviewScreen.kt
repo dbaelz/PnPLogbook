@@ -28,6 +28,12 @@ fun OverviewScreen(navigateTo: (Screen) -> Unit) {
         OverviewCard(Screen.Experience) { navigateTo(it) }
 
         OverviewCard(Screen.Currency) { navigateTo(it) }
+
+        OverviewCard(Screen.Persons) { navigateTo(it) }
+
+        OverviewCard(Screen.Groups) { navigateTo(it) }
+
+        OverviewCard(Screen.Places) { navigateTo(it) }
     }
 }
 

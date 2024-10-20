@@ -4,5 +4,8 @@ enum class Screen(val title: String) {
     Overview("Overview"),
     Logbook("Logbook"),
     Experience("Experience"),
-    Currency("Currency")
+    Currency("Currency"),
+    Persons("Persons"),
+    Groups("Groups"),
+    Places("Places")
 }

@@ -16,6 +16,9 @@ import de.dbaelz.pnp.logbook.features.currency.CurrencyScreen
 import de.dbaelz.pnp.logbook.features.experience.ExperienceScreen
 import de.dbaelz.pnp.logbook.features.logbook.LogbookScreen
 import de.dbaelz.pnp.logbook.features.overview.OverviewScreen
+import de.dbaelz.pnp.logbook.features.subject.GroupsScreen
+import de.dbaelz.pnp.logbook.features.subject.PersonsScreen
+import de.dbaelz.pnp.logbook.features.subject.PlacesScreen
 import de.dbaelz.pnp.logbook.navigation.Screen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -64,6 +67,18 @@ fun App() {
 
                 composable(route = Screen.Currency.name) {
                     CurrencyScreen()
+                }
+
+                composable(route = Screen.Persons.name) {
+                    PersonsScreen()
+                }
+
+                composable(route = Screen.Groups.name) {
+                    GroupsScreen()
+                }
+
+                composable(route = Screen.Places.name) {
+                    PlacesScreen()
                 }
             }
         }

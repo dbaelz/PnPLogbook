@@ -23,7 +23,8 @@ fun Route.registerSubjectRoutes() {
                 try {
                     val addSubject = call.receive<AddSubject>()
                     subjectRepository.add(addSubject, subjectType)
-                    call.respond(HttpStatusCode.NoContent)
+
+                    call.respond(subjectRepository.getByType(subjectType))
                 } catch (exception: IllegalStateException) {
                     call.respond(HttpStatusCode.BadRequest)
                 } catch (exception: JsonConvertException) {
