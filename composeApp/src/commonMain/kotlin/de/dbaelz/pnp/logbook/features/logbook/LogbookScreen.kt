@@ -1,12 +1,12 @@
 package de.dbaelz.pnp.logbook.features.logbook
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.Card
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,7 +55,11 @@ private fun Content(
                 modifier = Modifier.weight(1f)
             ) {
                 items(state.logbookEntries) {
-                    LogbookItem(it)
+                    LogbookItem(it) { id ->
+                        viewModel.sendEvent(
+                            Event.DeleteLogbook(id)
+                        )
+                    }
                 }
             }
         }
@@ -72,11 +76,13 @@ private fun Content(
 }
 
 @Composable
-private fun LogbookItem(logbookEntry: LogbookEntry) {
+private fun LogbookItem(
+    logbookEntry: LogbookEntry,
+    onDeleteClicked: (id: Int) -> Unit
+) {
     Card(
         modifier = Modifier
             .padding(vertical = 4.dp)
-            .height(96.dp)
             .fillMaxWidth(),
         elevation = 4.dp
     ) {
@@ -84,17 +90,25 @@ private fun LogbookItem(logbookEntry: LogbookEntry) {
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
                     textAlign = TextAlign.End,
-                    text = logbookEntry.id.toString()
+                    text = logbookEntry.date.format(localDateTimeFormat)
                 )
-
 
                 Text(
                     textAlign = TextAlign.End,
-                    text = logbookEntry.date.format(localDateTimeFormat)
+                    text = "• ${logbookEntry.id}"
+                )
+
+                Spacer(Modifier.weight(1f))
+
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = Icons.Default.Delete.name,
+                    modifier = Modifier
+                        .clickable { onDeleteClicked(logbookEntry.id) }
                 )
             }
 

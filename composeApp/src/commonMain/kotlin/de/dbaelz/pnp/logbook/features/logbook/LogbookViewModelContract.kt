@@ -16,5 +16,7 @@ object LogbookViewModelContract {
             val location: String,
             val text: String
         ) : Event
+
+        data class DeleteLogbook(val id: Int) : Event
     }
 }

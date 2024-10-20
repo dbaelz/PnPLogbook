@@ -16,4 +16,8 @@ class LogbookRepository {
             setBody(AddLogbookEntry(location, text))
         }.body()
     }
+
+    suspend fun deleteLogbookEntry(id: Int): List<LogbookEntry> {
+        return httpClient.delete("logbook/$id").body()
+    }
 }

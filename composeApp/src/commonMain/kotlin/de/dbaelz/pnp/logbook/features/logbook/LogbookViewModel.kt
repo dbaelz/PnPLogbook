@@ -30,15 +30,12 @@ class LogbookViewModel(
 
             is Event.AddLogbook -> {
                 addLogbook(event.location, event.text)
-                if (state is State.Content) {
-                    state.copy(
-                        isLoading = true
-                    )
-                } else {
-                    State.Content(
-                        isLoading = true
-                    )
-                }
+                state.asContentStateWithLoading()
+            }
+
+            is Event.DeleteLogbook -> {
+                deleteLogbookEntry(event.id)
+                state.asContentStateWithLoading()
             }
         }
     }
@@ -61,6 +58,18 @@ class LogbookViewModel(
         }
     }
 
+    private fun State.asContentStateWithLoading(): State.Content {
+        return if (this is State.Content) {
+            this.copy(
+                isLoading = true
+            )
+        } else {
+            State.Content(
+                isLoading = true
+            )
+        }
+    }
+
     private fun getLogbook() {
         viewModelScope.launch {
             try {
@@ -79,6 +88,17 @@ class LogbookViewModel(
                 sendEvent(Internal.Event.UpdateLogbook(updatedLogbook))
             } catch (exception: Exception) {
                 sendEvent(Internal.Event.ShowMessage("Error adding logbook: ${exception.message}"))
+            }
+        }
+    }
+
+    private fun deleteLogbookEntry(id: Int) {
+        viewModelScope.launch {
+            try {
+                val updatedLogbook = logbookRepository.deleteLogbookEntry(id)
+                sendEvent(Internal.Event.UpdateLogbook(updatedLogbook))
+            } catch (exception: Exception) {
+                sendEvent(Internal.Event.ShowMessage("Error deleting logbook: ${exception.message}"))
             }
         }
     }
