@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.ktor.serialization.json.jvm)
     implementation(libs.ktor.server.contentnegotiation)
     implementation(libs.ktor.server.cors)
+    implementation(libs.ktor.server.htmlbuilder)
     implementation(libs.ktor.exposed.core)
     implementation(libs.ktor.exposed.jdbc)
     implementation(libs.ktor.exposed.datetime)

@@ -3,11 +3,13 @@ package de.dbaelz.pnp.logbook
 import de.dbaelz.pnp.logbook.features.currency.registerCurrencyRoutes
 import de.dbaelz.pnp.logbook.features.experience.registerExperienceRoutes
 import de.dbaelz.pnp.logbook.features.logbook.registerLogbookRoutes
+import de.dbaelz.pnp.logbook.features.rootHtml
 import de.dbaelz.pnp.logbook.features.subject.registerSubjectRoutes
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
+import io.ktor.server.html.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
@@ -38,7 +40,9 @@ fun Application.module() {
 
     routing {
         get("/") {
-            call.respondText("Welcome to the PnP Logbook!")
+            call.respondHtml(
+                status = HttpStatusCode.OK, block = rootHtml()
+            )
         }
 
         route("/api") {
