@@ -1,11 +1,11 @@
 package de.dbaelz.pnp.logbook.features.currency
 
-import de.dbaelz.pnp.logbook.network.httpClient
+import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class CurrencyRepository {
+class CurrencyRepository(private val httpClient: HttpClient) {
     suspend fun getCurrency(): CurrencyDTO {
         return httpClient.get("currency").body()
     }

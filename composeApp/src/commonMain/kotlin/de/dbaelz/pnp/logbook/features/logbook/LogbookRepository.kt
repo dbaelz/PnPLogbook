@@ -1,11 +1,11 @@
 package de.dbaelz.pnp.logbook.features.logbook
 
-import de.dbaelz.pnp.logbook.network.httpClient
+import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class LogbookRepository {
+class LogbookRepository(private val httpClient: HttpClient) {
     suspend fun getLogbook(): List<LogbookEntry> {
         return httpClient.get("logbook").body()
     }

@@ -1,11 +1,14 @@
 package de.dbaelz.pnp.logbook.features.subject
 
-import de.dbaelz.pnp.logbook.network.httpClient
+import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class SubjectRepository(private val resource: String) {
+class SubjectRepository(
+    private val httpClient: HttpClient,
+    private val resource: String
+) {
     suspend fun getSubjectEntries(): List<Subject> {
         return httpClient.get(resource).body()
     }

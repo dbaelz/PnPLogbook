@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.features.currency.CurrencyViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.currency.CurrencyViewModelContract.State
+import de.dbaelz.pnp.logbook.network.httpClient
 import de.dbaelz.pnp.logbook.ui.Loading
 import de.dbaelz.pnp.logbook.ui.localDateTimeFormat
 import kotlinx.datetime.format
@@ -25,7 +26,7 @@ import kotlinx.datetime.format
 @Composable
 fun CurrencyScreen(
     viewModel: CurrencyViewModel = viewModel {
-        CurrencyViewModel(CurrencyRepository())
+        CurrencyViewModel(CurrencyRepository(httpClient))
     }
 ) {
     when (val state = viewModel.state.collectAsState().value) {

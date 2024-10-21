@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.features.logbook.LogbookViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.logbook.LogbookViewModelContract.State
+import de.dbaelz.pnp.logbook.network.httpClient
 import de.dbaelz.pnp.logbook.ui.Loading
 import de.dbaelz.pnp.logbook.ui.localDateTimeFormat
 import kotlinx.datetime.format
@@ -22,7 +23,7 @@ import kotlinx.datetime.format
 @Composable
 fun LogbookScreen(
     viewModel: LogbookViewModel = viewModel {
-        LogbookViewModel(LogbookRepository())
+        LogbookViewModel(LogbookRepository(httpClient))
     }
 ) {
     when (val state = viewModel.state.collectAsState().value) {

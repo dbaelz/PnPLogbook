@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.State
+import de.dbaelz.pnp.logbook.network.httpClient
 import de.dbaelz.pnp.logbook.ui.Loading
 import de.dbaelz.pnp.logbook.ui.localDateTimeFormat
 import kotlinx.datetime.format
@@ -24,7 +25,7 @@ import kotlinx.datetime.format
 @Composable
 fun ExperienceScreen(
     viewModel: ExperienceViewModel = viewModel {
-        ExperienceViewModel(ExperienceRepository())
+        ExperienceViewModel(ExperienceRepository(httpClient))
     }
 ) {
     when (val state = viewModel.state.collectAsState().value) {
