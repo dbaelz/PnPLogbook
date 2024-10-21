@@ -24,6 +24,8 @@ napier = "2.7.1"
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
@@ -49,19 +51,19 @@ ktor-serialization-json-jvm = { group = "io.ktor", name = "ktor-serialization-ko
 ktor-server-contentnegotiation = { group = "io.ktor", name = "ktor-server-content-negotiation-jvm", version.ref = "ktor" }
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
-ktor-exposed-jdbc  = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
-ktor-exposed-datetime  = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
+ktor-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+ktor-exposed-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
 sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 
 ## Ktor Client
-ktor-client-core  = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-client-contentnegotiation  = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-client-logging  = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-ktor-client-android  = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
-ktor-client-desktop  = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
-ktor-client-ios  = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
-ktor-client-js  = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
-
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-contentnegotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-desktop = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
