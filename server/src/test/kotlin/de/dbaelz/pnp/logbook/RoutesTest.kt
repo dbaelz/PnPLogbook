@@ -1,8 +1,6 @@
 package de.dbaelz.pnp.logbook
 
-import de.dbaelz.pnp.logbook.features.experience.AddExperience
 import de.dbaelz.pnp.logbook.features.experience.ExperienceDTO
-import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
