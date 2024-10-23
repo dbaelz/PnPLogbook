@@ -1,5 +1,7 @@
 package de.dbaelz.pnp.logbook
 
+import de.dbaelz.pnp.logbook.features.actionlog.ActionLog
+import de.dbaelz.pnp.logbook.features.actionlog.registerActionLogRoutes
 import de.dbaelz.pnp.logbook.features.currency.registerCurrencyRoutes
 import de.dbaelz.pnp.logbook.features.experience.registerExperienceRoutes
 import de.dbaelz.pnp.logbook.features.logbook.registerLogbookRoutes
@@ -14,6 +16,7 @@ import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.routing.*
+import io.ktor.server.sse.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import java.io.File
@@ -29,14 +32,23 @@ fun Application.module() {
 
     install(CORS) {
         // Fixme: Only for local testing
-        allowHost("localhost:8081")
+        anyHost()
+        anyMethod()
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HEADER_X_PLATFORM)
+
+        // TODO: Fix CORS and make Wasm working with SSE...
     }
 
     install(ContentNegotiation) {
         json()
     }
+
+    // Custom plugin that logs API Calls as action log and emits them via ActionLogRepository
+    // Should inject the repository with DI in the future
+    val actionLogPlugin = install(ActionLog)
+
+    install(SSE)
 
     routing {
         get("/") {
@@ -50,6 +62,8 @@ fun Application.module() {
             registerCurrencyRoutes()
             registerLogbookRoutes()
             registerSubjectRoutes()
+
+            registerActionLogRoutes(actionLogPlugin.configuration.repository)
         }
     }
 }
