@@ -1,6 +1,8 @@
 package de.dbaelz.pnp.logbook.network
 
+import de.dbaelz.pnp.logbook.HEADER_X_PLATFORM
 import de.dbaelz.pnp.logbook.SERVER_PORT
+import de.dbaelz.pnp.logbook.getPlatform
 import de.dbaelz.pnp.logbook.getServerHost
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
@@ -8,6 +10,7 @@ import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
+import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
@@ -40,6 +43,7 @@ fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
                 port = SERVER_PORT
                 path("api/")
             }
+            header(HEADER_X_PLATFORM, getPlatform())
         }
     }
 

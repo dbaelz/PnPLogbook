@@ -1,7 +1,11 @@
 package de.dbaelz.pnp.logbook
 
-interface Platform {
-    val name: String
+enum class Platform {
+    Android,
+    IOS,
+    JVM,
+    Wasm,
+    Unknown
 }
 
 expect fun getPlatform(): Platform

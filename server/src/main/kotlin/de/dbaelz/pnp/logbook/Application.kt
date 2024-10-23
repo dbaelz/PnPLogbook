@@ -13,7 +13,6 @@ import io.ktor.server.html.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
@@ -32,6 +31,7 @@ fun Application.module() {
         // Fixme: Only for local testing
         allowHost("localhost:8081")
         allowHeader(HttpHeaders.ContentType)
+        allowHeader(HEADER_X_PLATFORM)
     }
 
     install(ContentNegotiation) {
