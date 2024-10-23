@@ -5,6 +5,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -20,11 +21,32 @@ import de.dbaelz.pnp.logbook.features.subject.GroupsScreen
 import de.dbaelz.pnp.logbook.features.subject.PersonsScreen
 import de.dbaelz.pnp.logbook.features.subject.PlacesScreen
 import de.dbaelz.pnp.logbook.navigation.Screen
+import de.dbaelz.pnp.logbook.network.httpClient
+import io.github.aakira.napier.Napier
+import io.ktor.client.plugins.sse.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
+    LaunchedEffect(Unit) {
+        // TODO: For testing only
+        //  Should be refactored and done in a AppViewModel
+        httpClient.sse(
+            host = getServerHost(),
+            port = SERVER_PORT,
+            path = "api/actionlog"
+        ) {
+            while (true) {
+                incoming.collect { event ->
+                    event.data?.let {
+                        Napier.d("SSE Event: $it")
+                    }
+                }
+            }
+        }
+    }
+
     MaterialTheme {
         val navController: NavHostController = rememberNavController()
         val backStackEntry by navController.currentBackStackEntryAsState()

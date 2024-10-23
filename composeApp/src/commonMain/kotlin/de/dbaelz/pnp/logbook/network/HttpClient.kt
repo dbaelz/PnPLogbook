@@ -10,6 +10,7 @@ import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
+import io.ktor.client.plugins.sse.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -37,6 +38,9 @@ fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
                 ignoreUnknownKeys = true
             })
         }
+
+        install(SSE)
+
         defaultRequest {
             url {
                 host = getServerHost()
