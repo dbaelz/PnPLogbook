@@ -7,5 +7,7 @@ enum class Screen(val title: String) {
     Currency("Currency"),
     Persons("Persons"),
     Groups("Groups"),
-    Places("Places")
+    Places("Places"),
+
+    ActionLog("Action Log"),
 }

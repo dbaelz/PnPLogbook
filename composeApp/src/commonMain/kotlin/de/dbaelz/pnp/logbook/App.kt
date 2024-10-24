@@ -1,18 +1,23 @@
 package de.dbaelz.pnp.logbook
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import de.dbaelz.pnp.logbook.app.AppViewModel
+import de.dbaelz.pnp.logbook.features.actionlog.ActionLogScreen
 import de.dbaelz.pnp.logbook.features.currency.CurrencyScreen
 import de.dbaelz.pnp.logbook.features.experience.ExperienceScreen
 import de.dbaelz.pnp.logbook.features.logbook.LogbookScreen
@@ -22,30 +27,16 @@ import de.dbaelz.pnp.logbook.features.subject.PersonsScreen
 import de.dbaelz.pnp.logbook.features.subject.PlacesScreen
 import de.dbaelz.pnp.logbook.navigation.Screen
 import de.dbaelz.pnp.logbook.network.httpClient
-import io.github.aakira.napier.Napier
-import io.ktor.client.plugins.sse.*
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
-    LaunchedEffect(Unit) {
-        // TODO: For testing only
-        //  Should be refactored and done in a AppViewModel
-        httpClient.sse(
-            host = getServerHost(),
-            port = SERVER_PORT,
-            path = "api/actionlog"
-        ) {
-            while (true) {
-                incoming.collect { event ->
-                    event.data?.let {
-                        Napier.d("SSE Event: $it")
-                    }
-                }
-            }
-        }
+fun App(
+    viewModel: AppViewModel = androidx.lifecycle.viewmodel.compose.viewModel {
+        AppViewModel(httpClient)
     }
+) {
+    val state = viewModel.state.collectAsState()
 
     MaterialTheme {
         val navController: NavHostController = rememberNavController()
@@ -54,15 +45,19 @@ fun App() {
             backStackEntry?.destination?.route ?: Screen.Overview.name
         )
 
-        // TODO: Improve UI
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 TopBar(
                     currentScreen = currentScreen,
                     canNavigateBack = navController.previousBackStackEntry != null,
-                    navigateUp = { navController.navigateUp() }
-
+                    navigateUp = { navController.navigateUp() },
+                    actionLogCount = state.value.actionLogItems.size,
+                    onActionLogCountClicked = {
+                        if (currentScreen != Screen.ActionLog) {
+                            navController.navigate(Screen.ActionLog.name)
+                        }
+                    }
                 )
             }
         ) {
@@ -102,6 +97,10 @@ fun App() {
                 composable(route = Screen.Places.name) {
                     PlacesScreen()
                 }
+
+                composable(route = Screen.ActionLog.name) {
+                    ActionLogScreen(state.value.actionLogItems)
+                }
             }
         }
     }
@@ -111,7 +110,9 @@ fun App() {
 private fun TopBar(
     currentScreen: Screen,
     canNavigateBack: Boolean,
-    navigateUp: () -> Unit
+    navigateUp: () -> Unit,
+    actionLogCount: Int,
+    onActionLogCountClicked: () -> Unit
 ) {
     TopAppBar(
         title = { Text(currentScreen.title) },
@@ -123,6 +124,16 @@ private fun TopBar(
                         contentDescription = Icons.AutoMirrored.Filled.ArrowBack.name
                     )
                 }
+            }
+        },
+        actions = {
+            Button(
+                onClick = onActionLogCountClicked,
+                shape = CircleShape,
+                border = BorderStroke(2.dp, MaterialTheme.colors.onPrimary),
+                elevation = ButtonDefaults.elevation(defaultElevation = 4.dp)
+            ) {
+                Text(actionLogCount.toString())
             }
         }
     )

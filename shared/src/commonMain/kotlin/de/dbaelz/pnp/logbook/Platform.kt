@@ -1,11 +1,11 @@
 package de.dbaelz.pnp.logbook
 
-enum class Platform {
-    Android,
-    IOS,
-    JVM,
-    Wasm,
-    Unknown
+enum class Platform(val text: String) {
+    Android("Android"),
+    IOS("iOS"),
+    JVM("Desktop"),
+    Wasm("Web"),
+    Unknown("Unknown");
 }
 
 expect fun getPlatform(): Platform
