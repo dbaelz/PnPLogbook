@@ -22,6 +22,8 @@ class ActionLog(val configuration: Configuration) {
             val plugin = ActionLog(configuration)
 
             pipeline.intercept(ApplicationCallPipeline.Monitoring) {
+                if (call.request.uri.contains("/api/actionlog")) return@intercept
+
                 call.request.headers[configuration.headerName]?.let { platformHeader ->
                     val platform = Platform.entries
                         .find { it.name == platformHeader } ?: Platform.Unknown
