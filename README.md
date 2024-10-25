@@ -2,7 +2,15 @@
 Provides a logbook for Pen & Paper games. Intended feature are
 * Experience point and currency tracking
 * Logbook for sessions to track story relevant events
-* Person and places directory
+* Persons, groups and places directory
+
+## Disclaimer
+The features work and can be used as intended. Nevertheless, it's primarily a demo to showcase the
+client and server-side components of Ktor and Kotlin Multiplatform.
+Therefore, some features might exist to enhance the showcase and aren't intended for production use.
+For example, there is an easy option to shut down the server from the client.
+Also, the security of the client and server should be improved before deploying it in production.
+Please keep those limitations in mind when using the project.
 
 ## Project structure
 This is a Kotlin Multiplatform project targeting Android, iOS, web, desktop and server.
