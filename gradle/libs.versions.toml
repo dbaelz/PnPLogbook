@@ -52,6 +52,7 @@ ktor-server-contentnegotiation = { group = "io.ktor", name = "ktor-server-conten
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
 ktor-server-htmlbuilder = { module = "io.ktor:ktor-server-html-builder", version.ref = "ktor" }
 ktor-server-sse = { module = "io.ktor:ktor-server-sse", version.ref = "ktor" }
+ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
 ktor-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 ktor-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 ktor-exposed-datetime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }

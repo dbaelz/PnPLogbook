@@ -14,11 +14,13 @@ import io.github.aakira.napier.Napier
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.engine.*
 import io.ktor.server.html.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sse.*
 import org.jetbrains.exposed.sql.Database
@@ -50,6 +52,19 @@ fun Application.module() {
         // TODO: Fix CORS and make Wasm working with SSE...
     }
 
+    install(Authentication) {
+        basic("auth") {
+            realm = "Authentication for shutdown URL"
+            validate { (username, password) ->
+                if (username == BASIC_AUTH_USERNAME && password == BASIC_AUTH_PASSWORD) {
+                    UserIdPrincipal(username)
+                } else {
+                    null
+                }
+            }
+        }
+    }
+
     install(ContentNegotiation) {
         json()
     }
@@ -60,11 +75,6 @@ fun Application.module() {
 
     install(SSE)
 
-    install(ShutDownUrl.ApplicationCallPlugin) {
-        shutDownUrl = ApiRoute.SHUTDOWN.fullResourcePath
-        exitCodeSupplier = { 0 }
-    }
-
     routing {
         get(rootPath) {
             call.respondHtml(
@@ -73,6 +83,20 @@ fun Application.module() {
         }
 
         route(apiBasePath) {
+            // TODO: Hacky solution.
+            //  The problem is that shutdownUrl plugin intercepts the EnginePipeline.Before hook.
+            //  So it's always executed before the routing is done and therefore it's necessary to
+            //  install the plugin after the first routing is done.
+            authenticate("auth") {
+                get(ApiRoute.SHUTDOWN.resourcePath) {
+                    install(ShutDownUrl.ApplicationCallPlugin) {
+                        shutDownUrl = ApiRoute.SHUTDOWN.fullResourcePath
+                        exitCodeSupplier = { 0 }
+                    }
+                    call.respondRedirect(ApiRoute.SHUTDOWN.fullResourcePath)
+                }
+            }
+
             registerExperienceRoutes()
             registerCurrencyRoutes()
             registerLogbookRoutes()
