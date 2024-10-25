@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.features.subject.SubjectViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.subject.SubjectViewModelContract.State
 import de.dbaelz.pnp.logbook.network.httpClient
@@ -21,7 +22,7 @@ import de.dbaelz.pnp.logbook.ui.Loading
 @Composable
 fun PersonsScreen(
     viewModel: SubjectViewModel = viewModel {
-        SubjectViewModel(SubjectRepository(httpClient, "persons"))
+        SubjectViewModel(SubjectRepository(httpClient, ApiRoute.PERSONS.resource))
     }
 ) {
     SubjectScreen(viewModel)
@@ -30,7 +31,7 @@ fun PersonsScreen(
 @Composable
 fun GroupsScreen(
     viewModel: SubjectViewModel = viewModel {
-        SubjectViewModel(SubjectRepository(httpClient, "groups"))
+        SubjectViewModel(SubjectRepository(httpClient, ApiRoute.GROUPS.resource))
     }
 ) {
     SubjectScreen(viewModel)
@@ -39,7 +40,7 @@ fun GroupsScreen(
 @Composable
 fun PlacesScreen(
     viewModel: SubjectViewModel = viewModel {
-        SubjectViewModel(SubjectRepository(httpClient, "places"))
+        SubjectViewModel(SubjectRepository(httpClient, ApiRoute.PLACES.resource))
     }
 ) {
     SubjectScreen(viewModel)

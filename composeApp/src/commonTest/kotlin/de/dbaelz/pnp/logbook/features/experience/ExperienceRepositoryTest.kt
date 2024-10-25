@@ -1,5 +1,6 @@
 package de.dbaelz.pnp.logbook.features.experience
 
+import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.helper.now
 import de.dbaelz.pnp.logbook.helper.serializeToByteReadChannel
 import de.dbaelz.pnp.logbook.network.createHttpClient
@@ -69,7 +70,7 @@ class ExperienceRepositoryTest {
         )
 
         val mockEngine = MockEngine { request ->
-            assertEquals("/api/experience", request.url.encodedPath)
+            assertEquals(ApiRoute.EXPERIENCE.fullResourcePath, request.url.encodedPath)
             assertEquals(HttpMethod.Post, request.method)
             assertEquals(ContentType.Application.Json, request.body.contentType)
 
@@ -103,7 +104,7 @@ class ExperienceRepositoryTest {
         val expectedReason = "reason1"
 
         val mockEngine = MockEngine { request ->
-            assertEquals("/api/experience", request.url.encodedPath)
+            assertEquals(ApiRoute.EXPERIENCE.fullResourcePath, request.url.encodedPath)
             assertEquals(HttpMethod.Post, request.method)
             assertEquals(ContentType.Application.Json, request.body.contentType)
 

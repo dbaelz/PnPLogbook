@@ -5,7 +5,9 @@ import de.dbaelz.pnp.logbook.SERVER_PORT
 import de.dbaelz.pnp.logbook.app.AppViewModel.Internal
 import de.dbaelz.pnp.logbook.app.AppViewModelContract.Event
 import de.dbaelz.pnp.logbook.app.AppViewModelContract.State
+import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.features.actionlog.ActionLogItem
+import de.dbaelz.pnp.logbook.features.apiResource
 import de.dbaelz.pnp.logbook.getServerHost
 import de.dbaelz.pnp.logbook.viewmodel.BaseViewModel
 import io.github.aakira.napier.Napier
@@ -58,7 +60,7 @@ class AppViewModel(
             httpClient.sse(
                 host = getServerHost(),
                 port = SERVER_PORT,
-                path = "api/actionlog"
+                path = "$apiResource${ApiRoute.ACTION_LOG.resourcePath}"
             ) {
                 incoming.collect { event ->
                     event.data?.let {

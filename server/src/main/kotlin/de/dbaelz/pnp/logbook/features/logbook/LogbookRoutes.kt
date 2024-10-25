@@ -1,5 +1,6 @@
 package de.dbaelz.pnp.logbook.features.logbook
 
+import de.dbaelz.pnp.logbook.features.ApiRoute
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*
@@ -9,7 +10,7 @@ import io.ktor.server.routing.*
 fun Route.registerLogbookRoutes() {
     val logbookRepository = LogbookRepository()
 
-    route("/logbook") {
+    route(ApiRoute.LOGBOOK.resourcePath) {
         get {
             call.respond(logbookRepository.getLogbook())
         }

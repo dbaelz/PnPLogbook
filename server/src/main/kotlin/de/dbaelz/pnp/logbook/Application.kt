@@ -2,6 +2,7 @@ package de.dbaelz.pnp.logbook
 
 import de.dbaelz.pnp.logbook.features.actionlog.ActionLog
 import de.dbaelz.pnp.logbook.features.actionlog.registerActionLogRoutes
+import de.dbaelz.pnp.logbook.features.apiBasePath
 import de.dbaelz.pnp.logbook.features.currency.registerCurrencyRoutes
 import de.dbaelz.pnp.logbook.features.experience.registerExperienceRoutes
 import de.dbaelz.pnp.logbook.features.logbook.registerLogbookRoutes
@@ -59,13 +60,13 @@ fun Application.module() {
     install(SSE)
 
     routing {
-        get("/") {
+        get(rootPath) {
             call.respondHtml(
                 status = HttpStatusCode.OK, block = rootHtml()
             )
         }
 
-        route("/api") {
+        route(apiBasePath) {
             registerExperienceRoutes()
             registerCurrencyRoutes()
             registerLogbookRoutes()

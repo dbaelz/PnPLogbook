@@ -2,6 +2,7 @@ package de.dbaelz.pnp.logbook.features.actionlog
 
 import de.dbaelz.pnp.logbook.HEADER_X_PLATFORM
 import de.dbaelz.pnp.logbook.Platform
+import de.dbaelz.pnp.logbook.features.ApiRoute
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.util.*
@@ -22,7 +23,7 @@ class ActionLog(val configuration: Configuration) {
             val plugin = ActionLog(configuration)
 
             pipeline.intercept(ApplicationCallPipeline.Monitoring) {
-                if (call.request.uri.contains("/api/actionlog")) return@intercept
+                if (call.request.uri.contains(ApiRoute.ACTION_LOG.fullResourcePath)) return@intercept
 
                 call.request.headers[configuration.headerName]?.let { platformHeader ->
                     val platform = Platform.entries

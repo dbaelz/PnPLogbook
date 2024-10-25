@@ -2,6 +2,8 @@ package de.dbaelz.pnp.logbook.network
 
 import de.dbaelz.pnp.logbook.HEADER_X_PLATFORM
 import de.dbaelz.pnp.logbook.SERVER_PORT
+import de.dbaelz.pnp.logbook.features.apiBasePath
+import de.dbaelz.pnp.logbook.features.apiResource
 import de.dbaelz.pnp.logbook.getPlatform
 import de.dbaelz.pnp.logbook.getServerHost
 import io.github.aakira.napier.Napier
@@ -45,7 +47,7 @@ fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
             url {
                 host = getServerHost()
                 port = SERVER_PORT
-                path("api/")
+                path("$apiResource/")
             }
             header(HEADER_X_PLATFORM, getPlatform())
         }

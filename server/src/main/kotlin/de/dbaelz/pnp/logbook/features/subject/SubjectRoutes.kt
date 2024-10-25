@@ -1,5 +1,7 @@
 package de.dbaelz.pnp.logbook.features.subject
 
+import de.dbaelz.pnp.logbook.features.ApiRoute
+import de.dbaelz.pnp.logbook.features.subject.SubjectRepository.SubjectType
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.request.*
@@ -10,9 +12,9 @@ fun Route.registerSubjectRoutes() {
     val subjectRepository = SubjectRepository()
 
     listOf(
-        "/persons" to SubjectRepository.SubjectType.Person,
-        "/groups" to SubjectRepository.SubjectType.Group,
-        "/places" to SubjectRepository.SubjectType.Place,
+        ApiRoute.PERSONS.resourcePath to SubjectType.Person,
+        ApiRoute.GROUPS.resourcePath to SubjectType.Group,
+        ApiRoute.PLACES.resourcePath to SubjectType.Place,
     ).forEach { (path, subjectType) ->
         route(path) {
             get {

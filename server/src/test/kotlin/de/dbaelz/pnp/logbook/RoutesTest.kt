@@ -1,5 +1,7 @@
 package de.dbaelz.pnp.logbook
 
+import de.dbaelz.pnp.logbook.features.ApiRoute
+import de.dbaelz.pnp.logbook.features.apiBasePath
 import de.dbaelz.pnp.logbook.features.experience.ExperienceDTO
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -25,14 +27,14 @@ class RoutesTest {
               </head>
               <body>
                 <h1>Welcome to the PnP Logbook</h1>
-                <p>This is the root page of the PnP Logbook. The REST API is available at /api
+                <p>This is the root page of the PnP Logbook. The REST API is available at $apiBasePath
                   <ul>
-                    <li><a href="/api/logbook">Logbook</a></li>
-                    <li><a href="/api/experience">Experience</a></li>
-                    <li><a href="/api/currency">Currency</a></li>
-                    <li><a href="/api/persons">Persons</a></li>
-                    <li><a href="/api/groups">Groups</a></li>
-                    <li><a href="/api/places">Places</a></li>
+                    <li><a href="${ApiRoute.LOGBOOK.fullResourcePath}">Logbook</a></li>
+                    <li><a href="${ApiRoute.EXPERIENCE.fullResourcePath}">Experience</a></li>
+                    <li><a href="${ApiRoute.CURRENCY.fullResourcePath}">Currency</a></li>
+                    <li><a href="${ApiRoute.PERSONS.fullResourcePath}">Persons</a></li>
+                    <li><a href="${ApiRoute.GROUPS.fullResourcePath}">Groups</a></li>
+                    <li><a href="${ApiRoute.PLACES.fullResourcePath}">Places</a></li>
                   </ul>
                 </p>
               </body>
@@ -54,7 +56,7 @@ class RoutesTest {
 
         val expected = ExperienceDTO(0, emptyList())
 
-        val response = client.get("/api/experience")
+        val response = client.get(ApiRoute.EXPERIENCE.fullResourcePath)
         val actual = Json.decodeFromString(ExperienceDTO.serializer(), response.bodyAsText())
 
         assertEquals(HttpStatusCode.OK, response.status)
