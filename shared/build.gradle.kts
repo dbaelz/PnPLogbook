@@ -44,6 +44,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.ktor.serialization.json)
             implementation(libs.kotlinx.datetime)
+
+            api(libs.napier)
         }
     }
 }

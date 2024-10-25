@@ -7,6 +7,8 @@ import de.dbaelz.pnp.logbook.features.experience.registerExperienceRoutes
 import de.dbaelz.pnp.logbook.features.logbook.registerLogbookRoutes
 import de.dbaelz.pnp.logbook.features.rootHtml
 import de.dbaelz.pnp.logbook.features.subject.registerSubjectRoutes
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -28,6 +30,8 @@ fun main() {
 }
 
 fun Application.module() {
+    Napier.base(DebugAntilog())
+
     configureDatabase()
 
     install(CORS) {
