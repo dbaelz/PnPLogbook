@@ -1,15 +1,13 @@
 package de.dbaelz.pnp.logbook.network
 
-import de.dbaelz.pnp.logbook.HEADER_X_PLATFORM
-import de.dbaelz.pnp.logbook.SERVER_PORT
-import de.dbaelz.pnp.logbook.features.apiBasePath
+import de.dbaelz.pnp.logbook.*
 import de.dbaelz.pnp.logbook.features.apiResource
-import de.dbaelz.pnp.logbook.getPlatform
-import de.dbaelz.pnp.logbook.getServerHost
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.auth.*
+import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.plugins.sse.*
@@ -30,6 +28,15 @@ fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
                 }
             }
             level = LogLevel.ALL
+        }
+
+        install(Auth) {
+            basic {
+                credentials {
+                    BasicAuthCredentials(BASIC_AUTH_USERNAME, BASIC_AUTH_PASSWORD)
+                }
+                realm = BASIC_AUTH_REALM
+            }
         }
 
         install(ContentNegotiation) {

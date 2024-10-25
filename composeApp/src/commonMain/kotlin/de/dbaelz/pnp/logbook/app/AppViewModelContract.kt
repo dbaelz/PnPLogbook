@@ -9,5 +9,7 @@ object AppViewModelContract {
 
     sealed interface Event {
         data object ShowActionLog : Event
+
+        data object ShutdownServer : Event
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -17,6 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import de.dbaelz.pnp.logbook.app.AppViewModel
+import de.dbaelz.pnp.logbook.app.AppViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.actionlog.ActionLogScreen
 import de.dbaelz.pnp.logbook.features.currency.CurrencyScreen
 import de.dbaelz.pnp.logbook.features.experience.ExperienceScreen
@@ -57,6 +59,9 @@ fun App(
                         if (currentScreen != Screen.ActionLog) {
                             navController.navigate(Screen.ActionLog.name)
                         }
+                    },
+                    onShutdownClicked = {
+                        viewModel.sendEvent(Event.ShutdownServer)
                     }
                 )
             }
@@ -112,7 +117,8 @@ private fun TopBar(
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     actionLogCount: Int,
-    onActionLogCountClicked: () -> Unit
+    onActionLogCountClicked: () -> Unit,
+    onShutdownClicked: () -> Unit
 ) {
     TopAppBar(
         title = { Text(currentScreen.title) },
@@ -134,6 +140,16 @@ private fun TopBar(
                 elevation = ButtonDefaults.elevation(defaultElevation = 4.dp)
             ) {
                 Text(actionLogCount.toString())
+            }
+
+            IconButton(
+                onClick = onShutdownClicked
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = Icons.Default.Warning.name,
+                    tint = MaterialTheme.colors.onPrimary
+                )
             }
         }
     )

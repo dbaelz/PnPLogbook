@@ -54,7 +54,7 @@ fun Application.module() {
 
     install(Authentication) {
         basic("auth") {
-            realm = "Authentication for shutdown URL"
+            realm = BASIC_AUTH_REALM
             validate { (username, password) ->
                 if (username == BASIC_AUTH_USERNAME && password == BASIC_AUTH_PASSWORD) {
                     UserIdPrincipal(username)

@@ -9,3 +9,5 @@ expect fun getServerHost(): String
 // Fixme: For testing. Obviously not secure to hardcode the credentials
 const val BASIC_AUTH_USERNAME = "admin"
 const val BASIC_AUTH_PASSWORD = "password123"
+
+const val BASIC_AUTH_REALM = "Authentication for shutdown URL"

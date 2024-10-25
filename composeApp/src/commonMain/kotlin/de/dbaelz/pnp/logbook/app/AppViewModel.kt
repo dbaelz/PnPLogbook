@@ -13,6 +13,7 @@ import de.dbaelz.pnp.logbook.viewmodel.BaseViewModel
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
 import io.ktor.client.plugins.sse.*
+import io.ktor.client.request.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -41,6 +42,10 @@ class AppViewModel(
             is Internal.Event -> reduceInternal(state, event)
 
             is Event.ShowActionLog -> state
+            is Event.ShutdownServer -> {
+                shutdownServer()
+                state
+            }
         }
     }
 
@@ -50,6 +55,16 @@ class AppViewModel(
                 state.copy(
                     actionLogItems = state.actionLogItems + listOf(event.item)
                 )
+            }
+        }
+    }
+
+    private fun shutdownServer() {
+        viewModelScope.launch {
+            try {
+                httpClient.get(ApiRoute.SHUTDOWN.resource)
+            } catch (exception: Exception) {
+                Napier.e("Error shutting down server", exception)
             }
         }
     }
