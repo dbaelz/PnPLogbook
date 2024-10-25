@@ -1,5 +1,6 @@
 package de.dbaelz.pnp.logbook
 
+import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.features.actionlog.ActionLog
 import de.dbaelz.pnp.logbook.features.actionlog.registerActionLogRoutes
 import de.dbaelz.pnp.logbook.features.apiBasePath
@@ -58,6 +59,11 @@ fun Application.module() {
     val actionLogPlugin = install(ActionLog)
 
     install(SSE)
+
+    install(ShutDownUrl.ApplicationCallPlugin) {
+        shutDownUrl = ApiRoute.SHUTDOWN.fullResourcePath
+        exitCodeSupplier = { 0 }
+    }
 
     routing {
         get(rootPath) {

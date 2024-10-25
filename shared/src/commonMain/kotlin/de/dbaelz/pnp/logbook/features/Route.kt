@@ -9,6 +9,7 @@ enum class ApiRoute(override val resource: String) : BaseRoute {
     PLACES("places"),
 
     ACTION_LOG("actionlog"),
+    SHUTDOWN("shutdown")
 }
 
 interface BaseRoute {
