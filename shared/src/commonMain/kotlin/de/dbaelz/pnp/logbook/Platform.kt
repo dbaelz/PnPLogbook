@@ -9,5 +9,3 @@ enum class Platform(val text: String) {
 }
 
 expect fun getPlatform(): Platform
-
-expect fun getServerHost(): String
