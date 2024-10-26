@@ -20,7 +20,6 @@ import io.ktor.server.html.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sse.*
 import org.jetbrains.exposed.sql.Database
@@ -73,6 +72,9 @@ fun Application.module() {
     // Should inject the repository with DI in the future
     val actionLogPlugin = install(ActionLog)
 
+    // Use it ShutDownUrl class without the plugin to trigger it manually
+    val shutdown = ShutDownUrl("") { 0 }
+
     install(SSE)
 
     routing {
@@ -83,17 +85,10 @@ fun Application.module() {
         }
 
         route(apiBasePath) {
-            // TODO: Hacky solution.
-            //  The problem is that shutdownUrl plugin intercepts the EnginePipeline.Before hook.
-            //  So it's always executed before the routing is done and therefore it's necessary to
-            //  install the plugin after the first routing is done.
             authenticate("auth") {
                 get(ApiRoute.SHUTDOWN.resourcePath) {
-                    install(ShutDownUrl.ApplicationCallPlugin) {
-                        shutDownUrl = ApiRoute.SHUTDOWN.fullResourcePath
-                        exitCodeSupplier = { 0 }
-                    }
-                    call.respondRedirect(ApiRoute.SHUTDOWN.fullResourcePath)
+                    // Calling the shutdown logic provided by the shutdown url plugin
+                    shutdown.doShutdown(call)
                 }
             }
 
