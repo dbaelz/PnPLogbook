@@ -12,20 +12,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.features.logbook.LogbookViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.logbook.LogbookViewModelContract.State
-import de.dbaelz.pnp.logbook.network.httpClient
 import de.dbaelz.pnp.logbook.ui.Loading
 import de.dbaelz.pnp.logbook.ui.localDateTimeFormat
 import kotlinx.datetime.format
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun LogbookScreen(
-    viewModel: LogbookViewModel = viewModel {
-        LogbookViewModel(LogbookRepository(httpClient))
-    }
-) {
+fun LogbookScreen() {
+    val viewModel: LogbookViewModel = koinViewModel()
+
     when (val state = viewModel.state.collectAsState().value) {
         is State.Loading -> {
             Loading()

@@ -59,6 +59,8 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.client.android)
+
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -76,6 +78,9 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.ktor.client.auth)
             implementation(libs.ktor.serialization.json)
+
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
 
             implementation(projects.shared)
         }

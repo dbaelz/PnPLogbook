@@ -45,6 +45,7 @@ kotlin {
             implementation(libs.ktor.serialization.json)
             implementation(libs.kotlinx.datetime)
 
+            api(libs.koin.core)
             api(libs.napier)
         }
     }

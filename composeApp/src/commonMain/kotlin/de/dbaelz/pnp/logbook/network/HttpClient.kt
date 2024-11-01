@@ -17,8 +17,6 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
 
-val httpClient = createHttpClient()
-
 fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
     val clientConfig: HttpClientConfig<*>.() -> Unit = {
         install(Logging) {

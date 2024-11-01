@@ -14,20 +14,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.experience.ExperienceViewModelContract.State
-import de.dbaelz.pnp.logbook.network.httpClient
 import de.dbaelz.pnp.logbook.ui.Loading
 import de.dbaelz.pnp.logbook.ui.localDateTimeFormat
 import kotlinx.datetime.format
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ExperienceScreen(
-    viewModel: ExperienceViewModel = viewModel {
-        ExperienceViewModel(ExperienceRepository(httpClient))
-    }
-) {
+fun ExperienceScreen() {
+    val viewModel: ExperienceViewModel = koinViewModel()
+
     when (val state = viewModel.state.collectAsState().value) {
         is State.Loading -> {
             Loading()

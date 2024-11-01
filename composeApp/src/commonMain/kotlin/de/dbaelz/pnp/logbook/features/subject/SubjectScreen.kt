@@ -14,35 +14,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.dbaelz.pnp.logbook.features.ApiRoute
+import de.dbaelz.pnp.logbook.features.logbook.LogbookViewModel
 import de.dbaelz.pnp.logbook.features.subject.SubjectViewModelContract.Event
 import de.dbaelz.pnp.logbook.features.subject.SubjectViewModelContract.State
-import de.dbaelz.pnp.logbook.network.httpClient
 import de.dbaelz.pnp.logbook.ui.Loading
+import io.ktor.client.*
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.qualifier.named
 
 @Composable
-fun PersonsScreen(
-    viewModel: SubjectViewModel = viewModel {
-        SubjectViewModel(SubjectRepository(httpClient, ApiRoute.PERSONS.resource))
-    }
-) {
+fun PersonsScreen() {
+    val viewModel: SubjectViewModel = koinViewModel(qualifier = named(ApiRoute.PERSONS.resource))
+
     SubjectScreen(viewModel)
 }
 
 @Composable
-fun GroupsScreen(
-    viewModel: SubjectViewModel = viewModel {
-        SubjectViewModel(SubjectRepository(httpClient, ApiRoute.GROUPS.resource))
-    }
-) {
+fun GroupsScreen() {
+    val viewModel: SubjectViewModel = koinViewModel(qualifier = named(ApiRoute.GROUPS.resource))
+
     SubjectScreen(viewModel)
 }
 
 @Composable
-fun PlacesScreen(
-    viewModel: SubjectViewModel = viewModel {
-        SubjectViewModel(SubjectRepository(httpClient, ApiRoute.PLACES.resource))
-    }
-) {
+fun PlacesScreen() {
+    val viewModel: SubjectViewModel = koinViewModel(qualifier = named(ApiRoute.PLACES.resource))
+
     SubjectScreen(viewModel)
 }
 
