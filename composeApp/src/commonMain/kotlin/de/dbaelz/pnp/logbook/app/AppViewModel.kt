@@ -72,27 +72,31 @@ class AppViewModel(
     private fun observeSSE() {
         sseJob?.cancel()
         sseJob = viewModelScope.launch {
-            httpClient.sse(
-                host = getServerHost(),
-                port = SERVER_PORT,
-                path = "$apiResource${ApiRoute.ACTION_LOG.resourcePath}"
-            ) {
-                incoming.collect { event ->
-                    event.data?.let {
-                        try {
-                            sendEvent(
-                                Internal.Event.AddActionLogItem(
-                                    Json.decodeFromString<ActionLogItem>(it)
+            try {
+                httpClient.sse(
+                    host = getServerHost(),
+                    port = SERVER_PORT,
+                    path = "$apiResource${ApiRoute.ACTION_LOG.resourcePath}"
+                ) {
+                    incoming.collect { event ->
+                        event.data?.let {
+                            try {
+                                sendEvent(
+                                    Internal.Event.AddActionLogItem(
+                                        Json.decodeFromString<ActionLogItem>(it)
+                                    )
                                 )
-                            )
-                        } catch (exception: Exception) {
-                            Napier.e(
-                                throwable = exception,
-                                message = "Error parsing SSE event: $it"
-                            )
+                            } catch (exception: Exception) {
+                                Napier.e(
+                                    throwable = exception,
+                                    message = "Error parsing SSE event: $it"
+                                )
+                            }
                         }
                     }
                 }
+            } catch (exception: Exception) {
+                Napier.e("Error connecting to SSE", exception)
             }
         }
     }
