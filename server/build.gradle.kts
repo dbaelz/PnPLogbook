@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.ktor.exposed.jdbc)
     implementation(libs.ktor.exposed.datetime)
     implementation(libs.sqlite)
+    implementation(libs.koin.ktor)
 
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)

@@ -8,9 +8,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.registerSubjectRoutes() {
-    val subjectRepository = SubjectRepository()
-
+fun Route.registerSubjectRoutes(subjectRepository: SubjectRepository) {
     listOf(
         ApiRoute.PERSONS.resourcePath to SubjectType.Person,
         ApiRoute.GROUPS.resourcePath to SubjectType.Group,

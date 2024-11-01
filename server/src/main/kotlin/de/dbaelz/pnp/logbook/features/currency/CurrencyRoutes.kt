@@ -7,9 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.registerCurrencyRoutes() {
-    val currencyRepository = CurrencyRepository()
-
+fun Route.registerCurrencyRoutes(currencyRepository: CurrencyRepository) {
     route(ApiRoute.CURRENCY.resourcePath) {
         get {
             val currency = currencyRepository.getAmountAndEntries()

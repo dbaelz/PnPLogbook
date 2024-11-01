@@ -1,8 +1,5 @@
 package de.dbaelz.pnp.logbook.features.currency
 
-import de.dbaelz.pnp.logbook.features.currency.AddCurrency
-import de.dbaelz.pnp.logbook.features.currency.Coins
-import de.dbaelz.pnp.logbook.features.currency.Currency
 import de.dbaelz.pnp.logbook.helper.executeQuery
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.SchemaUtils

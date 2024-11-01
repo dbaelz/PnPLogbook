@@ -7,9 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.registerExperienceRoutes() {
-    val experienceRepository = ExperienceRepository()
-
+fun Route.registerExperienceRoutes(experienceRepository: ExperienceRepository) {
     route(ApiRoute.EXPERIENCE.resourcePath) {
         get {
             val experience = experienceRepository.getExperience()

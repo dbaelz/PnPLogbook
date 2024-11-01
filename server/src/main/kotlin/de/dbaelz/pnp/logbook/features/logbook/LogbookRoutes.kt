@@ -7,9 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.registerLogbookRoutes() {
-    val logbookRepository = LogbookRepository()
-
+fun Route.registerLogbookRoutes(logbookRepository: LogbookRepository) {
     route(ApiRoute.LOGBOOK.resourcePath) {
         get {
             call.respond(logbookRepository.getLogbook())
