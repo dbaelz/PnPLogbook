@@ -94,13 +94,10 @@ fun Application.module() {
 
     install(SSE)
 
-
-    // TODO: Is there a cleaner way to inject it (directly into the Route extension function)?
     val experienceRepository by inject<ExperienceRepository>()
     val currencyRepository by inject<CurrencyRepository>()
     val logbookRepository by inject<LogbookRepository>()
     val subjectRepository by inject<SubjectRepository>()
-
 
     routing {
         get(rootPath) {
