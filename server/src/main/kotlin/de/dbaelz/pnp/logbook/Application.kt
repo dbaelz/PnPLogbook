@@ -3,6 +3,7 @@ package de.dbaelz.pnp.logbook
 import de.dbaelz.pnp.logbook.di.koinModule
 import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.features.actionlog.ActionLog
+import de.dbaelz.pnp.logbook.features.actionlog.ActionLogRepository
 import de.dbaelz.pnp.logbook.features.actionlog.registerActionLogRoutes
 import de.dbaelz.pnp.logbook.features.apiBasePath
 import de.dbaelz.pnp.logbook.features.currency.CurrencyRepository
@@ -30,7 +31,6 @@ import io.ktor.server.routing.*
 import io.ktor.server.sse.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
-import org.koin.ktor.ext.get
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
 import java.io.File
@@ -82,11 +82,14 @@ fun Application.module() {
         json()
     }
 
-    // Custom plugin that logs API Calls as action log and emits them via ActionLogRepository
-    // Should inject the repository with DI in the future
-    val actionLogPlugin = install(ActionLog)
+    val actionLogRepository by inject<ActionLogRepository>()
 
-    // Use it ShutDownUrl class without the plugin to trigger it manually
+    // Custom plugin that logs API Calls as action log and emits them via ActionLogRepository
+    install(ActionLog) {
+        repository = actionLogRepository
+    }
+
+    // Use ShutDownUrl class without the plugin to trigger it manually
     val shutdown = ShutDownUrl("") { 0 }
 
     install(SSE)
@@ -119,7 +122,7 @@ fun Application.module() {
             registerLogbookRoutes(logbookRepository)
             registerSubjectRoutes(subjectRepository)
 
-            registerActionLogRoutes(actionLogPlugin.configuration.repository)
+            registerActionLogRoutes(actionLogRepository)
         }
     }
 }

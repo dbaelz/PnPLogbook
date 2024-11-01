@@ -8,7 +8,8 @@ import io.ktor.server.request.*
 import io.ktor.util.*
 
 class ActionLog(val configuration: Configuration) {
-    class Configuration(val repository: ActionLogRepository) {
+    class Configuration {
+        var repository: ActionLogRepository? = null
         var headerName = HEADER_X_PLATFORM
     }
 
@@ -19,7 +20,9 @@ class ActionLog(val configuration: Configuration) {
             pipeline: ApplicationCallPipeline,
             configure: Configuration.() -> Unit
         ): ActionLog {
-            val configuration = Configuration(ActionLogRepository()).apply(configure)
+            val configuration = Configuration()
+            configure(configuration)
+
             val plugin = ActionLog(configuration)
 
             pipeline.intercept(ApplicationCallPipeline.Monitoring) {
@@ -29,13 +32,13 @@ class ActionLog(val configuration: Configuration) {
                     val platform = Platform.entries
                         .find { it.name == platformHeader } ?: Platform.Unknown
 
-                    configuration.repository.add(
+                    plugin.configuration.repository?.add(
                         item = ActionLogItem(
                             platform = platform,
                             httpMethod = call.request.httpMethod.value,
                             path = call.request.path()
                         )
-                    )
+                    ) ?: error("No repository configured")
                 }
             }
 
