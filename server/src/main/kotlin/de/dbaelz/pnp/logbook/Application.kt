@@ -1,6 +1,5 @@
 package de.dbaelz.pnp.logbook
 
-import de.dbaelz.pnp.logbook.di.koinModule
 import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.features.actionlog.ActionLog
 import de.dbaelz.pnp.logbook.features.actionlog.ActionLogRepository
@@ -31,6 +30,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.sse.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.koin.core.module.Module
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
 import java.io.File
@@ -41,12 +41,18 @@ fun main() {
         .start(wait = true)
 }
 
-fun Application.module() {
+fun Application.module(
+    // Workaround to use different injections for tests
+    // We can't use loadKoinModules in tests because the properties are injected in this
+    // extension function and therefore loadKoinModules doesn't change that properties afterward
+    // Might change when https://github.com/InsertKoinIO/koin/issues/1716 is solved
+    koinModules: List<Module> = listOf(de.dbaelz.pnp.logbook.di.koinModule)
+) {
     Napier.base(DebugAntilog())
 
     install(Koin) {
         logger(NapierKoinLogger())
-        modules(koinModule)
+        modules(koinModules)
     }
 
     configureDatabase()

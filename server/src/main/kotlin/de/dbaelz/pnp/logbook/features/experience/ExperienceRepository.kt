@@ -9,7 +9,13 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class ExperienceRepository {
+interface ExperienceRepository {
+    suspend fun getExperience(): List<Experience>
+
+    suspend fun add(experience: AddExperience)
+}
+
+class ExperienceRepositoryImpl : ExperienceRepository {
     private object ExperienceTable : IntIdTable() {
         val date = datetime("date").defaultExpression(CurrentDateTime)
         val experience = integer("experience")
@@ -22,7 +28,7 @@ class ExperienceRepository {
         }
     }
 
-    suspend fun getExperience(): List<Experience> {
+    override suspend fun getExperience(): List<Experience> {
         return executeQuery {
             ExperienceTable.selectAll()
                 .map {
@@ -36,7 +42,7 @@ class ExperienceRepository {
         }
     }
 
-    suspend fun add(experience: AddExperience) {
+    override suspend fun add(experience: AddExperience) {
         executeQuery {
             ExperienceTable.insert {
                 it[ExperienceTable.experience] = experience.experience

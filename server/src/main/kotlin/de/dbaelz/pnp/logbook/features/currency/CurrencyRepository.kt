@@ -9,7 +9,13 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class CurrencyRepository {
+interface CurrencyRepository {
+    suspend fun getAmountAndEntries(): Pair<Coins, List<Currency>>
+
+    suspend fun add(currency: AddCurrency)
+}
+
+class CurrencyRepositoryImpl : CurrencyRepository {
     private object CurrencyTable : IntIdTable() {
         val date = datetime("date").defaultExpression(CurrentDateTime)
         val copper = integer("copper")
@@ -26,7 +32,7 @@ class CurrencyRepository {
         }
     }
 
-    suspend fun getAmountAndEntries(): Pair<Coins, List<Currency>> {
+    override suspend fun getAmountAndEntries(): Pair<Coins, List<Currency>> {
         val currencyEntries = executeQuery {
             CurrencyTable.selectAll()
                 .map {
@@ -67,7 +73,7 @@ class CurrencyRepository {
         return coins to currencyEntries
     }
 
-    suspend fun add(currency: AddCurrency) {
+    override suspend fun add(currency: AddCurrency) {
         executeQuery {
             CurrencyTable.insert {
                 it[copper] = currency.coins.copper

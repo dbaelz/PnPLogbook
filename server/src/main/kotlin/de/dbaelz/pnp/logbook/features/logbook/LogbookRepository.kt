@@ -11,7 +11,17 @@ import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class LogbookRepository {
+interface LogbookRepository {
+    suspend fun getLogbook(): List<LogbookEntry>
+
+    suspend fun getLogbookEntry(id: Int): LogbookEntry?
+
+    suspend fun add(logbook: AddLogbookEntry)
+
+    suspend fun delete(id: Int)
+}
+
+class LogbookRepositoryImpl : LogbookRepository {
     private object LogbookTable : IntIdTable() {
         val date = datetime("date").defaultExpression(CurrentDateTime)
         val location = varchar("location", 255)
@@ -24,7 +34,7 @@ class LogbookRepository {
         }
     }
 
-    suspend fun getLogbook(): List<LogbookEntry> {
+    override suspend fun getLogbook(): List<LogbookEntry> {
         return executeQuery {
             LogbookTable.selectAll()
                 .map {
@@ -38,7 +48,7 @@ class LogbookRepository {
         }
     }
 
-    suspend fun getLogbookEntry(id: Int): LogbookEntry? {
+    override suspend fun getLogbookEntry(id: Int): LogbookEntry? {
         return executeQuery {
             LogbookTable.selectAll()
                 .where { LogbookTable.id eq id }
@@ -54,7 +64,7 @@ class LogbookRepository {
         }
     }
 
-    suspend fun add(logbook: AddLogbookEntry) {
+    override suspend fun add(logbook: AddLogbookEntry) {
         executeQuery {
             LogbookTable.insert {
                 it[location] = logbook.location
@@ -63,7 +73,7 @@ class LogbookRepository {
         }
     }
 
-    suspend fun delete(id: Int) {
+    override suspend fun delete(id: Int) {
         executeQuery {
             LogbookTable.deleteWhere { LogbookTable.id eq id }
         }
