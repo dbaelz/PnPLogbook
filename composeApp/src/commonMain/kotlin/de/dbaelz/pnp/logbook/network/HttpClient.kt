@@ -1,6 +1,7 @@
 package de.dbaelz.pnp.logbook.network
 
 import de.dbaelz.pnp.logbook.*
+import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.features.apiResource
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
@@ -26,6 +27,14 @@ fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
                 }
             }
             level = LogLevel.ALL
+        }
+
+        install(CustomLoggingPlugin) {
+            fullResourcePath = ApiRoute.SHUTDOWN.fullResourcePath
+            logTag = "Shutdown"
+            logMessage = { response ->
+                "ShutdownResponse received: ${response.status.value} ${response.status.description}"
+            }
         }
 
         install(Auth) {
