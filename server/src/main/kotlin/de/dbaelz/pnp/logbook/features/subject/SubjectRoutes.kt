@@ -4,6 +4,7 @@ import de.dbaelz.pnp.logbook.features.ApiRoute
 import de.dbaelz.pnp.logbook.features.subject.SubjectRepository.SubjectType
 import io.ktor.http.*
 import io.ktor.serialization.*
+import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -25,6 +26,8 @@ fun Route.registerSubjectRoutes(subjectRepository: SubjectRepository) {
                     subjectRepository.add(addSubject, subjectType)
 
                     call.respond(subjectRepository.getByType(subjectType))
+                } catch (exception: CannotTransformContentToTypeException) {
+                    call.respond(HttpStatusCode.BadRequest)
                 } catch (exception: IllegalStateException) {
                     call.respond(HttpStatusCode.BadRequest)
                 } catch (exception: JsonConvertException) {
