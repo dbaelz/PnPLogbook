@@ -23,6 +23,7 @@ dependencies {
     implementation(libs.ktor.server.htmlbuilder)
     implementation(libs.ktor.server.sse)
     implementation(libs.ktor.server.auth)
+    implementation(libs.ktor.server.compression)
     implementation(libs.ktor.exposed.core)
     implementation(libs.ktor.exposed.jdbc)
     implementation(libs.ktor.exposed.datetime)
