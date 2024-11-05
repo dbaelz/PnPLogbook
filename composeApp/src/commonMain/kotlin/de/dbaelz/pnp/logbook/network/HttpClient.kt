@@ -9,6 +9,7 @@ import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.auth.*
 import io.ktor.client.plugins.auth.providers.*
+import io.ktor.client.plugins.compression.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.plugins.sse.*
@@ -44,6 +45,10 @@ fun createHttpClient(engine: HttpClientEngine? = null): HttpClient {
                 }
                 realm = BASIC_AUTH_REALM
             }
+        }
+
+        install(ContentEncoding) {
+            gzip()
         }
 
         install(ContentNegotiation) {
