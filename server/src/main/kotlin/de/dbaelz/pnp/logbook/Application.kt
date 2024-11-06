@@ -60,16 +60,17 @@ fun Application.module(
 
     install(CORS) {
         // Fixme: Only for local testing
-        anyHost()
+        allowHost("localhost:8081")
+
         anyMethod()
-        allowHeader(HttpHeaders.AccessControlAllowOrigin)
+
+        allowHeader(HttpHeaders.Authorization)
+        allowHeader(HttpHeaders.AccessControlAllowHeaders)
         allowHeader(HttpHeaders.ContentType)
+        allowHeader(HttpHeaders.UserAgent)
+        allowHeader(HttpHeaders.CacheControl)
+        allowHeader(HttpHeaders.Referrer)
         allowHeader(HEADER_X_PLATFORM)
-
-        allowSameOrigin = true
-        allowCredentials = true
-
-        // TODO: Fix CORS and make Wasm working with SSE...
     }
 
     install(Authentication) {
