@@ -29,6 +29,7 @@ import de.dbaelz.pnp.logbook.features.subject.GroupsScreen
 import de.dbaelz.pnp.logbook.features.subject.PersonsScreen
 import de.dbaelz.pnp.logbook.features.subject.PlacesScreen
 import de.dbaelz.pnp.logbook.navigation.Screen
+import de.dbaelz.pnp.logbook.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import org.koin.compose.viewmodel.koinViewModel
@@ -43,7 +44,7 @@ fun App() {
 
         val state = viewModel.state.collectAsState()
 
-        MaterialTheme {
+        AppTheme {
             val navController: NavHostController = rememberNavController()
             val backStackEntry by navController.currentBackStackEntryAsState()
             val currentScreen = Screen.valueOf(
@@ -52,6 +53,7 @@ fun App() {
 
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
+                backgroundColor = MaterialTheme.colors.surface,
                 topBar = {
                     TopBar(
                         currentScreen = currentScreen,

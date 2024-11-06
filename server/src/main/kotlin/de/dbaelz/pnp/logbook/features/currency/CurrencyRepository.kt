@@ -51,7 +51,6 @@ class CurrencyRepositoryImpl : CurrencyRepository {
                 }
         }
 
-        // TODO: Calculate properly and convert values
         val coinsArray = currencyEntries.fold(arrayOf(0, 0, 0, 0, 0)) { coins, current ->
             coins[0] += current.coins.copper
             coins[1] += current.coins.silver
