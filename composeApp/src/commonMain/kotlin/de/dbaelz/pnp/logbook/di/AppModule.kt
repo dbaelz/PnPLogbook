@@ -12,6 +12,8 @@ import de.dbaelz.pnp.logbook.features.logbook.LogbookViewModel
 import de.dbaelz.pnp.logbook.features.subject.SubjectRepository
 import de.dbaelz.pnp.logbook.features.subject.SubjectViewModel
 import de.dbaelz.pnp.logbook.network.createHttpClient
+import org.koin.core.module.dsl.viewModel
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -25,11 +27,11 @@ val appModule = module {
     single(named(GROUPS.resource)) { SubjectRepository(get(), GROUPS.resource) }
     single(named(PLACES.resource)) { SubjectRepository(get(), PLACES.resource) }
 
-    factory { AppViewModel(get()) }
-    factory { LogbookViewModel(get()) }
-    factory { ExperienceViewModel(get()) }
-    factory { CurrencyViewModel(get()) }
-    factory(named(PERSONS.resource)) { SubjectViewModel(get(named(PERSONS.resource))) }
-    factory(named(GROUPS.resource)) { SubjectViewModel(get(named(GROUPS.resource))) }
-    factory(named(PLACES.resource)) { SubjectViewModel(get(named(PLACES.resource))) }
+    viewModelOf(::AppViewModel)
+    viewModelOf(::LogbookViewModel)
+    viewModelOf(::ExperienceViewModel)
+    viewModelOf(::CurrencyViewModel)
+    viewModel(named(PERSONS.resource)) { SubjectViewModel(get(named(PERSONS.resource))) }
+    viewModel(named(GROUPS.resource)) { SubjectViewModel(get(named(GROUPS.resource))) }
+    viewModel(named(PLACES.resource)) { SubjectViewModel(get(named(PLACES.resource))) }
 }
