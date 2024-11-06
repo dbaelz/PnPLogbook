@@ -15,7 +15,7 @@ Please keep those limitations in mind when using the project.
 ## Project structure
 This is a Kotlin Multiplatform project targeting Android, iOS, web, desktop and server.
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
+* `/client` is for code that will be shared across your Compose Multiplatform client applications.
   It contains several subfolders:
   - `commonMain` is for code that’s common for all targets.
   - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
