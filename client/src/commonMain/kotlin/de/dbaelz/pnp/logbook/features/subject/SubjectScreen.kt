@@ -103,17 +103,14 @@ private fun SubjectItem(subject: Subject) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                textAlign = TextAlign.End,
                 text = subject.id.toString()
             )
 
             Text(
-                textAlign = TextAlign.End,
                 text = subject.name
             )
 
             Text(
-                textAlign = TextAlign.End,
                 text = subject.description
             )
 

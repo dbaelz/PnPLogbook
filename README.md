@@ -1,8 +1,12 @@
 # PnP Logbook
-Provides a logbook for Pen & Paper games. Intended feature are
-* Experience point and currency tracking
-* Logbook for sessions to track story relevant events
-* Persons, groups and places directory
+Provides a logbook for Pen & Paper games. Current features are:
+* Logbook: Capture every plot twist and crucial clue along your journey
+* Experience: Keep a record of the gained experience points. Never miss the level up
+* Currency: Track every coin you earn and spend. Even one copper counts!
+* Persons, groups and places: A catalog of everyone you've met, every faction you've crossed, and every place you've been
+
+The application is built with Ktor and Kotlin Multiplatform.
+It consists of a server providing a REST API and clients for Android, iOS, web and desktop.
 
 ## Disclaimer
 The features work and can be used as intended. Nevertheless, it's primarily a demo to showcase the
@@ -19,10 +23,9 @@ This is a Kotlin Multiplatform project targeting Android, iOS, web, desktop and 
   It contains several subfolders:
   - `commonMain` is for code that’s common for all targets.
   - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+    For example, if you want specific code for iOS then put it in `iosMain`.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
+* `/iosApp` contains iOS applications/XCode project. Even if you’re sharing your UI with Compose Multiplatform, 
   you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
 
 * `/server` is for the Ktor server application.
