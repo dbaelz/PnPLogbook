@@ -33,6 +33,11 @@ This is a Kotlin Multiplatform project targeting Android, iOS, web, desktop and 
 * `/shared` is for the code that will be shared between all targets in the project.
   The most important subfolder is `commonMain`. If preferred, you can add code to the platform-specific folders here too.
 
+## Screenshots
+![Android client](screenshot/android.png)
+![Desktop client](screenshot/desktop.png)
+![Web client](screenshot/web.png)
+
 ## Contribution
 Feel free to contribute via pull requests.
 
