@@ -4,6 +4,8 @@ const val SERVER_PORT = 8080
 
 const val HEADER_X_PLATFORM = "X-Platform"
 
+const val defaultHost = "127.0.0.1"
+
 expect fun getServerHost(): String
 
 // Fixme: For testing. Obviously not secure to hardcode the credentials

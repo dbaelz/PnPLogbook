@@ -37,10 +37,7 @@ import org.koin.ktor.plugin.Koin
 import java.io.File
 import java.sql.Connection
 
-fun main() {
-    embeddedServer(Netty, port = SERVER_PORT, host = getServerHost(), module = Application::module)
-        .start(wait = true)
-}
+fun main(args: Array<String>) = EngineMain.main(args)
 
 fun Application.module(
     // Workaround to use different injections for tests

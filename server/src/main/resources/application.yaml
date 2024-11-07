@@ -1,0 +1,7 @@
+ktor:
+  deployment:
+    host: "$HOST:127.0.0.1"
+    port: "$PORT:8080"
+  application:
+    modules:
+      - de.dbaelz.pnp.logbook.ApplicationKt.module

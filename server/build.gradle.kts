@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
     implementation(libs.ktor.serialization.json.jvm)
+    implementation(libs.ktor.server.config.yaml)
     implementation(libs.ktor.server.contentnegotiation)
     implementation(libs.ktor.server.cors)
     implementation(libs.ktor.server.htmlbuilder)
